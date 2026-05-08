@@ -61,7 +61,7 @@ def run_sandbox_hosting(output_dir: str | Path = "outputs/become-manus/sandbox-h
                     http_status = int(resp.status)
                     body = resp.read().decode("utf-8")
                     break
-            except Exception as exc:
+            except Exception:
                 import time
                 time.sleep(0.2)
 
@@ -145,7 +145,7 @@ def run_sandbox_hosting(output_dir: str | Path = "outputs/become-manus/sandbox-h
         # 9. Verify browser MCP endpoint (new)
         try:
             with urllib.request.urlopen("http://127.0.0.1:8080/v1/mcp", timeout=5) as resp:
-                mcp_body = resp.read().decode()
+                _ = resp.read().decode()
                 checks.append({
                     "name": "browser_mcp_endpoint",
                     "status": "pass",

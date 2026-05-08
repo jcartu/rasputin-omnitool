@@ -1,44 +1,39 @@
-# Become Manus
+# become_manus_kernel
 
-OSS replacement guide & integration harness for Manus-class agent capabilities.
-
-## What this provides
-
-- A curated catalog of OSS tools mapping to Manus AI capabilities
-- License review for cataloged tools
-- A bakeoff harness checking GitHub/PyPI/npm metadata per candidate
-- Library-import smoke tests for Docling and Crawl4AI
-- Parameterized deliverable generator (CSV/MD/PDF/XLSX/PPTX)
-- Browser E2E via Playwright
-- Sandbox HTTP probe for agent-infra/sandbox
-- Runtime E2E tests for core capabilities
-- Webapp generation and serving smoke test
-- Sandbox hosting verification
-
-## What this does NOT provide
-
-- Verified production-ready implementations of all capabilities
-- Guaranteed compatibility across all tool combinations
-- Complete feature parity with Manus
-- Automated deployment or integration setup
+Reusable Python kernel for the Become Manus sprint: OSS capability catalog, license review, bakeoff reports, deliverable generation, and isolated Docling/Crawl4AI library smoke checks.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/jcartu/become-manus.git
-cd become-manus
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
 
-python -m become_manus matrix
-python -m become_manus license-review
-python -m become_manus runtime-e2e
+python -m become_manus_kernel matrix
+python -m become_manus_kernel license-review
+python -m become_manus_kernel manual-license-review
+python -m become_manus_kernel bakeoff --no-external
+python -m become_manus_kernel library-smoke --no-external
 ```
+
+The installed console script is also available as:
+
+```bash
+become-manus-kernel --help
+```
+
+## CLI subcommands
+
+- `matrix` — print the OSS capability catalog
+- `license-review` — fetch GitHub license metadata
+- `manual-license-review` — write dual-license review markdown/JSON
+- `bakeoff` — run sandbox and deep-research candidate bakeoffs
+- `library-smoke` — run isolated Docling and Crawl4AI fixture smokes
 
 ## Tests
 
 ```bash
 pytest
+pyflakes become_manus_kernel/
 ```
 
 ## License

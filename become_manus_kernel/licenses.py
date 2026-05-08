@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import base64
 import json
 import urllib.error
 import urllib.request
@@ -8,8 +7,6 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable
-
-from .capability_matrix import CAPABILITIES
 
 PERMISSIVE_LICENSES = {
     "MIT",
@@ -43,7 +40,7 @@ DEFAULT_REPOS = {
     "unclecode/crawl4ai": ("Crawl4AI", "deep_research"),
     "docling-project/docling": ("Docling", "deep_research"),
     "activepieces/activepieces": ("Activepieces", "workflow_integrations"),
-    # verify-licensed candidates from capability_matrix
+    # verify-licensed candidates from catalog
     "alibaba/OpenSandbox": ("OpenSandbox", "agent_computer"),
     "onlook-dev/onlook": ("Onlook", "design_view"),
     "PostHog/posthog": ("PostHog", "analytics"),

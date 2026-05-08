@@ -1,27 +1,30 @@
 [project]
-name = "become_manus"
+name = "become_manus_kernel"
 version = "0.1.0"
-description = "Become Manus integration toolkit"
+description = "OSS capability catalog, license review, and library smoke for Manus-equivalent agent stacks"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [{name = "Joshua Cartu"}]
-dependencies = []
+dependencies = ["pyyaml>=6.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+docling = ["docling>=2.0"]
+crawl4ai = ["crawl4ai>=0.6"]
+playwright = ["playwright>=1.50"]
+dev = ["pytest>=8.0", "pyflakes>=3.2"]
 
 [project.scripts]
-become-manus = "become_manus.__main__:main"
+become-manus-kernel = "become_manus_kernel.cli.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
-include = ["become_manus*"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["become_manus_kernel*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]

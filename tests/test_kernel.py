@@ -2,11 +2,23 @@ import json
 import subprocess
 from pathlib import Path
 
-import pytest
+
+def test_public_api_exports_version_and_core_functions():
+    import become_manus_kernel as kernel
+
+    assert kernel.__version__ == "0.1.0"
+    assert callable(kernel.all_candidates)
+    assert callable(kernel.write_license_review)
+    assert callable(kernel.write_manual_license_review)
+    assert callable(kernel.run_sandbox_bakeoff)
+    assert callable(kernel.run_deep_research_bakeoff)
+    assert callable(kernel.create_demo_deliverables)
+    assert callable(kernel.run_docling_fixture_parse_e2e)
+    assert callable(kernel.run_crawl4ai_fixture_crawl_e2e)
 
 
-def test_candidate_matrix_contains_core_manus_capabilities():
-    from become_manus.capability_matrix import CAPABILITIES, candidate_summary
+def test_candidate_catalog_contains_core_manus_capabilities():
+    from become_manus_kernel.catalog import CAPABILITIES, candidate_summary
 
     required = {
         "agent_computer",
@@ -27,22 +39,8 @@ def test_candidate_matrix_contains_core_manus_capabilities():
     assert "Playwright MCP" in summary["preferred_candidates"]
 
 
-def test_smoke_report_schema_uses_safe_checks(tmp_path, monkeypatch):
-    from become_manus.smoke import run_smoke_checks
-
-    report = run_smoke_checks(output_dir=tmp_path, run_external=False)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    check_names = {check["name"] for check in report["checks"]}
-    assert {"python", "node", "npm", "hermes", "docker", "playwright_mcp_config"}.issubset(check_names)
-    written = tmp_path / "become-manus-smoke.json"
-    assert written.exists()
-    loaded = json.loads(written.read_text())
-    assert loaded["schema_version"] == 1
-
-
 def test_deliverable_demo_generates_expected_artifacts(tmp_path):
-    from become_manus.deliverables import create_demo_deliverables, validate_artifacts
+    from become_manus_kernel.deliverables import create_demo_deliverables, validate_artifacts
 
     manifest = create_demo_deliverables(tmp_path)
     names = {item["name"] for item in manifest["artifacts"]}
@@ -60,59 +58,56 @@ def test_deliverable_demo_generates_expected_artifacts(tmp_path):
     assert all(item["exists"] and item["size_bytes"] > 0 for item in validation["artifacts"])
 
 
-def test_cli_entrypoints_help():
+def test_cli_entrypoints_help_lists_five_subcommands():
     result = subprocess.run(
-        ["python", "-m", "become_manus", "--help"],
+        ["python", "-m", "become_manus_kernel", "--help"],
         cwd=Path(__file__).resolve().parents[1],
         text=True,
         capture_output=True,
         timeout=20,
     )
     assert result.returncode == 0
-    assert "smoke" in result.stdout
-    assert "demo" in result.stdout
-    assert "license-review" in result.stdout
-    assert "browser-e2e" in result.stdout
-    assert "sandbox-bakeoff" in result.stdout
-    assert "deep-research-bakeoff" in result.stdout
-    assert "webapp-smoke" in result.stdout
-    assert "runtime-e2e" in result.stdout
-    assert "sandbox-hosting" in result.stdout
-    assert "manual-license-review" in result.stdout
+    expected = {"matrix", "license-review", "manual-license-review", "bakeoff", "library-smoke"}
+    # Join wrapped usage lines (argparse splits long usage across lines)
+    all_lines = result.stdout.splitlines()
+    usage_parts = []
+    usage_found = False
+    for line in all_lines:
+        if line.startswith("usage:"):
+            usage_found = True
+            usage_parts.append(line)
+        elif usage_found and line.strip() and not line.startswith("positional") and not line.startswith("options:"):
+            usage_parts.append(line)
+        elif usage_found and (line.startswith("positional") or line.startswith("options:")):
+            break
+    usage_block = " ".join(usage_parts)
+    command_group = usage_block.split("{")[1].split("}")[0]
+    assert set(command_group.split(",")) == expected
+    for command in expected:
+        assert command in result.stdout
+    for removed in ("demo", "browser-e2e", "sandbox-bakeoff", "deep-research-bakeoff", "webapp-smoke", "runtime-e2e", "sandbox-hosting"):
+        assert removed not in result.stdout
 
 
-def test_runtime_e2e_report_schema_without_external_installs(tmp_path):
-    from become_manus.runtime_e2e import run_runtime_e2e
+def test_library_smoke_schemas_without_external_installs(tmp_path):
+    from become_manus_kernel.library_smoke import run_crawl4ai_fixture_crawl_e2e, run_docling_fixture_parse_e2e
 
-    summary_path = tmp_path / "runtime-e2e-report.md"
-    report = run_runtime_e2e(tmp_path / "runtime-e2e", summary_path=summary_path, run_external=False)
-    assert report["schema_version"] == 1
-    assert report["status"] == "blocker"
-    assert report["summary"]["capability_complete_count"] == 0
-    assert {item["name"] for item in report["e2e_reports"]} == {
-        "docling_fixture_parse",
-        "crawl4ai_fixture_crawl",
-        "sandbox_runtime_smoke",
-    }
-    assert all(item["capability_complete"] is False for item in report["e2e_reports"])
-    assert Path(report["artifacts"]["summary_markdown"]).exists()
-    assert Path(report["artifacts"]["summary_json"]).exists()
-    assert Path(report["artifacts"]["docling_report_json"]).exists()
-    assert Path(report["artifacts"]["crawl4ai_report_json"]).exists()
-    assert Path(report["artifacts"]["sandbox_report_json"]).exists()
+    docling = run_docling_fixture_parse_e2e(tmp_path / "docling", run_external=False)
+    crawl4ai = run_crawl4ai_fixture_crawl_e2e(tmp_path / "crawl4ai", run_external=False)
 
-
-def test_browser_e2e_schema_without_external_network(tmp_path):
-    from become_manus.browser_e2e import run_browser_e2e
-
-    report = run_browser_e2e(tmp_path, run_external=False)
-    assert report["schema_version"] == 1
-    assert report["status"] == "skip"
-    assert (tmp_path / "browser-e2e.json").exists()
+    for report in (docling, crawl4ai):
+        assert report["schema_version"] == 1
+        assert report["status"] == "blocker"
+        assert report["capability_complete"] is False
+        assert report["summary"]["attempted_install"] is False
+        assert Path(report["artifacts"]["report_json"]).exists()
+        assert Path(report["artifacts"]["report_markdown"]).exists()
+    assert docling["name"] == "docling_fixture_parse"
+    assert crawl4ai["name"] == "crawl4ai_fixture_crawl"
 
 
 def test_bakeoff_schema_without_external_network(tmp_path):
-    from become_manus.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
+    from become_manus_kernel.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
 
     sandbox = run_sandbox_bakeoff(tmp_path, run_external=False)
     deep_research = run_deep_research_bakeoff(tmp_path, run_external=False)
@@ -133,7 +128,7 @@ def test_bakeoff_schema_without_external_network(tmp_path):
 
 
 def test_bakeoff_parsers_extract_package_metadata():
-    from become_manus.bakeoff import parse_npm_view_json, parse_pip_index_versions
+    from become_manus_kernel.bakeoff import parse_npm_view_json, parse_pip_index_versions
 
     pip_payload = parse_pip_index_versions("crawl4ai (0.8.6)\nAvailable versions: 0.8.6, 0.8.5, 0.8.0")
     assert pip_payload["latest"] == "0.8.6"
@@ -145,27 +140,8 @@ def test_bakeoff_parsers_extract_package_metadata():
     assert npm_payload["repository_url"].endswith("sandbox-sdk.git")
 
 
-
-
-def test_webapp_smoke_generates_and_serves_static_app(tmp_path):
-    from become_manus.webapp_smoke import run_webapp_smoke
-
-    report = run_webapp_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] == "pass"
-    assert report["summary"]["http_status"] == 200
-    assert "Become Manus" in report["summary"]["page_title"]
-    assert Path(report["artifacts"]["app_dir"]).exists()
-    assert Path(report["artifacts"]["report_json"]).exists()
-
-
-
-
-
-
-
 def test_license_review_classifies_repo_license_risk():
-    from become_manus.license_review import LicenseReviewRecord, classify_license_risk, summarize_license_review
+    from become_manus_kernel.licenses import LicenseReviewRecord, classify_license_risk, summarize_license_review
 
     permissive = LicenseReviewRecord(
         name="Playwright MCP",
@@ -206,7 +182,7 @@ def test_license_review_classifies_repo_license_risk():
 
 
 def test_license_review_writes_markdown_and_json(tmp_path):
-    from become_manus.license_review import LicenseReviewRecord, write_license_review
+    from become_manus_kernel.licenses import LicenseReviewRecord, write_license_review
 
     records = [
         LicenseReviewRecord(
@@ -243,22 +219,8 @@ def test_license_review_writes_markdown_and_json(tmp_path):
     assert summary["summary"]["legal_review_required_count"] == 0
 
 
-def test_sandbox_hosting_schema(tmp_path):
-    from become_manus.sandbox_hosting import run_sandbox_hosting
-
-    report = run_sandbox_hosting(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "sandbox_hosting_e2e"
-    assert "checks" in report
-    assert isinstance(report["checks"], list)
-    assert "container_name" in report["summary"]
-    assert "http_status" in report["summary"]
-    assert (tmp_path / "sandbox-hosting.json").exists()
-
-
 def test_manual_license_review_writes_outputs(tmp_path):
-    from become_manus.manual_license_review import write_manual_license_review
+    from become_manus_kernel.licenses_manual import write_manual_license_review
 
     outputs = write_manual_license_review(tmp_path)
     markdown = Path(outputs["markdown_path"]).read_text()
