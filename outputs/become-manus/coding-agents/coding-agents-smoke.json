@@ -1,0 +1,85 @@
+{
+  "artifacts": {
+    "report_json": "outputs/become-manus/coding-agents/coding-agents-smoke.json"
+  },
+  "blockers": [],
+  "capability": "coding_agents",
+  "capability_complete": true,
+  "commands": [
+    {
+      "command": [
+        "aider",
+        "--version"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "aider 0.86.2",
+      "timeout_seconds": 180
+    },
+    {
+      "command": [
+        "GET",
+        "https://pypi.org/pypi/openhands/json"
+      ],
+      "ok": false,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\"ok\": false, \"error\": \"AttributeError: 'NoneType' object has no attribute 'get'\"}",
+      "timeout_seconds": 15
+    },
+    {
+      "command": [
+        "GET",
+        "https://pypi.org/pypi/aider-chat/json"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": true, \"version\": \"0.86.2\", \"summary\": \"Aider is AI pair programming in your terminal\", \"license\": null, \"home_page\": \"https://github.com/Aider-AI/aider\"}",
+      "timeout_seconds": 15
+    }
+  ],
+  "generated_at": "2026-05-08T14:45:37.246629+00:00",
+  "name": "coding_agents_smoke",
+  "safety": {
+    "cache_isolation": "read-only metadata fetches; no installs or side-effects",
+    "credential_use": "none",
+    "global_python_mutation": "none_intended",
+    "output_dir": "outputs/become-manus/coding-agents",
+    "system_config_mutation": "none_intended",
+    "workspace": "/home/josh/workspace"
+  },
+  "schema_version": 1,
+  "scope": "Check aider CLI availability and fetch OpenHands project metadata",
+  "status": "pass",
+  "summary": {
+    "aider_available": true,
+    "aider_pypi": {
+      "home_page": "https://github.com/Aider-AI/aider",
+      "license": null,
+      "ok": true,
+      "summary": "Aider is AI pair programming in your terminal",
+      "version": "0.86.2"
+    },
+    "aider_version": "aider 0.86.2",
+    "openhands": {
+      "archived": false,
+      "default_branch": "main",
+      "description": "\ud83d\ude4c OpenHands: AI-Driven Development",
+      "full_name": "OpenHands/OpenHands",
+      "html_url": "https://github.com/OpenHands/OpenHands",
+      "license_spdx": "NOASSERTION",
+      "name": "OpenHands",
+      "open_issues": 412,
+      "pushed_at": "2026-05-08T14:35:58Z",
+      "stars": 72916,
+      "stars_count": 72916
+    },
+    "openhands_metadata_ok": true,
+    "openhands_pypi": {
+      "error": "AttributeError: 'NoneType' object has no attribute 'get'",
+      "ok": false
+    }
+  }
+}

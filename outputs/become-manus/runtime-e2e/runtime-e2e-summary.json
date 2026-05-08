@@ -1,0 +1,100 @@
+{
+  "artifacts": {
+    "crawl4ai_report_json": "outputs/become-manus/runtime-e2e/crawl4ai-fixture-crawl.json",
+    "docling_report_json": "outputs/become-manus/runtime-e2e/docling-fixture-parse.json",
+    "sandbox_report_json": "outputs/become-manus/runtime-e2e/sandbox-runtime-smoke.json",
+    "summary_json": "outputs/become-manus/runtime-e2e/runtime-e2e-summary.json",
+    "summary_markdown": "outputs/become-manus/runtime-e2e-report.md"
+  },
+  "e2e_reports": [
+    {
+      "blockers": [],
+      "capability_complete": true,
+      "name": "docling_fixture_parse",
+      "note": "",
+      "report_json": "outputs/become-manus/runtime-e2e/docling-fixture-parse.json",
+      "report_markdown": "outputs/become-manus/runtime-e2e/docling-fixture-parse.md",
+      "status": "pass"
+    },
+    {
+      "blockers": [],
+      "capability_complete": true,
+      "name": "crawl4ai_fixture_crawl",
+      "note": "",
+      "report_json": "outputs/become-manus/runtime-e2e/crawl4ai-fixture-crawl.json",
+      "report_markdown": "outputs/become-manus/runtime-e2e/crawl4ai-fixture-crawl.md",
+      "status": "pass"
+    },
+    {
+      "blockers": [],
+      "capability_complete": true,
+      "name": "sandbox_runtime_smoke",
+      "note": "agent-infra/sandbox Docker runtime verified: container start, health check, Python code execution pass",
+      "report_json": "outputs/become-manus/runtime-e2e/sandbox-runtime-smoke.json",
+      "report_markdown": "outputs/become-manus/runtime-e2e/sandbox-runtime-smoke.md",
+      "status": "pass"
+    }
+  ],
+  "generated_at": "2026-05-08T14:04:16.879894+00:00",
+  "output_dir": "outputs/become-manus/runtime-e2e",
+  "run_external": true,
+  "safety": {
+    "browser_cache": "outputs/become-manus/runtime-e2e/playwright-browsers",
+    "credential_use": "none",
+    "cron_scheduling": "no new cron jobs scheduled",
+    "global_python_mutation": "none_intended",
+    "system_config_mutation": "none_intended",
+    "venv_dir": "outputs/become-manus/runtime-e2e/.venv"
+  },
+  "schema_version": 1,
+  "status": "pass",
+  "summary": {
+    "capability_complete_count": 3,
+    "crawl4ai_status": "pass",
+    "docling_status": "pass",
+    "report_count": 3,
+    "sandbox_status": "pass",
+    "status_counts": {
+      "blocker": 0,
+      "fail": 0,
+      "pass": 3,
+      "skip": 0,
+      "warn": 0
+    }
+  },
+  "venv": {
+    "commands": [
+      {
+        "command": [
+          "/home/josh/.hermes/hermes-agent/venv/bin/python",
+          "-m",
+          "venv",
+          "outputs/become-manus/runtime-e2e/.venv"
+        ],
+        "ok": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "",
+        "timeout_seconds": 180
+      },
+      {
+        "command": [
+          "outputs/become-manus/runtime-e2e/.venv/bin/python",
+          "-m",
+          "pip",
+          "--version"
+        ],
+        "ok": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "pip 24.0 from /home/josh/workspace/outputs/become-manus/runtime-e2e/.venv/lib/python3.11/site-packages/pip (python 3.11)",
+        "timeout_seconds": 60
+      }
+    ],
+    "generated_at": "2026-05-08T14:01:52.166282+00:00",
+    "python": "outputs/become-manus/runtime-e2e/.venv/bin/python",
+    "schema_version": 1,
+    "status": "pass",
+    "venv_dir": "outputs/become-manus/runtime-e2e/.venv"
+  }
+}

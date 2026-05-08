@@ -1,0 +1,130 @@
+{
+  "artifacts": {
+    "report_json": "outputs/become-manus/mobile/mobile-smoke.json"
+  },
+  "blockers": [
+    {
+      "next_command": "npm install -g @capacitor/cli",
+      "reason": "Capacitor CLI not available via npx. Install via `npm install -g @capacitor/cli`.",
+      "risk": "Global npm install modifies system node_modules."
+    }
+  ],
+  "capability": "mobile_publishing",
+  "capability_complete": false,
+  "commands": [
+    {
+      "command": [
+        "npx",
+        "expo",
+        "--version"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "stderr": "npm warn exec The following package was not found and will be installed: expo@55.0.23\nnpm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.\nnpm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported\nnpm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\nnpm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\nnpm warn deprecated uuid@7.0.3: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).",
+      "stdout": "55.0.29",
+      "timeout_seconds": 30
+    },
+    {
+      "command": [
+        "npx",
+        "cap",
+        "--version"
+      ],
+      "ok": false,
+      "returncode": 1,
+      "stderr": "npm error could not determine executable to run\nnpm error A complete log of this run can be found in: /home/josh/.npm/_logs/2026-05-08T14_46_02_667Z-debug-0.log",
+      "stdout": "",
+      "timeout_seconds": 30
+    },
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "v25.8.2",
+      "timeout_seconds": 10
+    },
+    {
+      "command": [
+        "npm",
+        "--version"
+      ],
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "11.11.1",
+      "timeout_seconds": 10
+    }
+  ],
+  "generated_at": "2026-05-08T14:45:43.758060+00:00",
+  "name": "mobile_smoke",
+  "safety": {
+    "cache_isolation": "read-only CLI version checks and metadata fetches; no project creation",
+    "credential_use": "none",
+    "global_python_mutation": "none_intended",
+    "output_dir": "outputs/become-manus/mobile",
+    "system_config_mutation": "none_intended",
+    "workspace": "/home/josh/workspace"
+  },
+  "schema_version": 1,
+  "scope": "Check Expo CLI and Capacitor CLI availability, fetch project metadata",
+  "status": "warn",
+  "summary": {
+    "capacitor_cli_available": "unknown",
+    "capacitor_cli_version": "",
+    "capacitor_github": {
+      "archived": false,
+      "default_branch": "main",
+      "description": "Build cross-platform Native Progressive Web Apps for iOS, Android, and the Web \u26a1\ufe0f",
+      "html_url": "https://github.com/ionic-team/capacitor",
+      "license_spdx": "MIT",
+      "name": "capacitor",
+      "pushed_at": "2026-05-07T19:02:05Z",
+      "stars": 15622
+    },
+    "capacitor_github_ok": true,
+    "capacitor_npm": {
+      "description": "Capacitor: Cross-platform apps with JavaScript and the web",
+      "homepage": "https://capacitorjs.com",
+      "license": "MIT",
+      "ok": true,
+      "version": "8.3.2"
+    },
+    "expo_cli_available": true,
+    "expo_cli_version": "55.0.29",
+    "expo_github": {
+      "archived": false,
+      "default_branch": "main",
+      "description": "An open-source framework for making universal native apps with React. Expo runs on Android, iOS, and the web.",
+      "html_url": "https://github.com/expo/expo",
+      "license_spdx": "MIT",
+      "name": "expo",
+      "pushed_at": "2026-05-08T14:42:08Z",
+      "stars": 49306
+    },
+    "expo_github_ok": true,
+    "expo_npm": {
+      "description": "The Expo SDK",
+      "homepage": "https://github.com/expo/expo/tree/main/packages/expo",
+      "license": "MIT",
+      "ok": true,
+      "version": "55.0.23"
+    },
+    "fastlane_github": {
+      "archived": false,
+      "default_branch": "master",
+      "description": "\ud83d\ude80 The easiest way to automate building and releasing your iOS and Android apps",
+      "html_url": "https://github.com/fastlane/fastlane",
+      "license_spdx": "MIT",
+      "name": "fastlane",
+      "pushed_at": "2026-05-08T11:44:01Z",
+      "stars": 41494
+    },
+    "fastlane_github_ok": true,
+    "node_version": "v25.8.2",
+    "npm_version": "11.11.1"
+  }
+}

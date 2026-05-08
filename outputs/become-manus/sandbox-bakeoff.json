@@ -1,0 +1,249 @@
+{
+  "summary": {
+    "schema_version": 1,
+    "generated_at": "2026-04-28T19:58:36.827418+00:00",
+    "status": "warn",
+    "candidate_count": 2,
+    "status_counts": {
+      "pass": 1,
+      "warn": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "capability_complete_count": 0,
+    "metadata_ready_count": 2
+  },
+  "kind": "sandbox-bakeoff",
+  "run_external": true,
+  "safety_policy": {
+    "host_mutation": "none_intended",
+    "forbidden_in_this_phase": [
+      "docker run",
+      "package install",
+      "service start",
+      "credential use"
+    ],
+    "completion_rule": "capability_complete remains false until an E2E/smoke artifact passes"
+  },
+  "records": [
+    {
+      "candidate": {
+        "name": "agent-infra/sandbox",
+        "capability": "agent_computer",
+        "repo": "agent-infra/sandbox",
+        "url": "https://github.com/agent-infra/sandbox",
+        "license": "Apache-2.0",
+        "role": "all-in-one Docker-style agent computer/sandbox runtime",
+        "package_manager": "npm",
+        "package_name": "@agent-infra/sandbox",
+        "import_names": [],
+        "cli_names": [],
+        "readiness_goal": "repo_and_sdk_metadata_ready_for_safe_followup",
+        "host_mutation_risk": "full runtime likely requires Docker/containers; this bakeoff does not start containers or mutate the host",
+        "e2e_scope": "deferred_until_isolated_container_smoke",
+        "notes": "Evaluated with GitHub API and npm package metadata only."
+      },
+      "status": "pass",
+      "readiness": {
+        "metadata_ready": true,
+        "local_import_available": false,
+        "local_cli_available": false,
+        "capability_complete": false,
+        "capability_claim": "not_complete_metadata_only_no_e2e_smoke_run",
+        "next_e2e_needed": "deferred_until_isolated_container_smoke"
+      },
+      "checks": [
+        {
+          "name": "github_repo_metadata",
+          "status": "pass",
+          "ok": true,
+          "api_url": "https://api.github.com/repos/agent-infra/sandbox",
+          "full_name": "agent-infra/sandbox",
+          "html_url": "https://github.com/agent-infra/sandbox",
+          "description": "All-in-One Sandbox for AI Agents that combines Browser, Shell, File, MCP and VSCode Server in a single Docker container.",
+          "stars": 4465,
+          "forks": 385,
+          "open_issues": 83,
+          "default_branch": "main",
+          "pushed_at": "2026-04-10T03:28:44Z",
+          "updated_at": "2026-04-28T12:36:32Z",
+          "archived": false,
+          "license_spdx": "Apache-2.0",
+          "license_name": "Apache License 2.0",
+          "topics": [
+            "agent",
+            "all-in-one",
+            "browser",
+            "filesystem",
+            "mcp",
+            "sandbox",
+            "shell"
+          ]
+        },
+        {
+          "name": "npm_view",
+          "status": "pass",
+          "package": "@agent-infra/sandbox",
+          "details": {
+            "command": [
+              "/home/linuxbrew/.linuxbrew/Cellar/node/25.8.2/bin/npm",
+              "view",
+              "@agent-infra/sandbox",
+              "version",
+              "license",
+              "repository.url",
+              "--json"
+            ],
+            "ok": true,
+            "returncode": 0,
+            "stdout": "{\n  \"version\": \"1.0.15\",\n  \"license\": \"ISC\",\n  \"repository.url\": \"git+https://github.com/agent-infra/sandbox-sdk.git\"\n}",
+            "stderr": "",
+            "timeout_seconds": 45
+          },
+          "version": "1.0.15",
+          "license": "ISC",
+          "repository_url": "git+https://github.com/agent-infra/sandbox-sdk.git",
+          "parse_error": null
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "name": "microsandbox",
+        "capability": "agent_computer",
+        "repo": "zerocore-ai/microsandbox",
+        "url": "https://github.com/zerocore-ai/microsandbox",
+        "license": "Apache-2.0",
+        "role": "local-first programmable code sandboxes",
+        "package_manager": "pypi",
+        "package_name": "microsandbox",
+        "import_names": [
+          "microsandbox"
+        ],
+        "cli_names": [
+          "microsandbox"
+        ],
+        "readiness_goal": "repo_and_pypi_metadata_ready_for_safe_followup",
+        "host_mutation_risk": "full runtime may start sandbox services/containers; this bakeoff only checks metadata/import/CLI availability",
+        "e2e_scope": "deferred_until_isolated_non_destructive_smoke",
+        "notes": "PyPI index/import/CLI checks are lightweight and do not install the package."
+      },
+      "status": "warn",
+      "readiness": {
+        "metadata_ready": true,
+        "local_import_available": false,
+        "local_cli_available": false,
+        "capability_complete": false,
+        "capability_claim": "not_complete_metadata_only_no_e2e_smoke_run",
+        "next_e2e_needed": "deferred_until_isolated_non_destructive_smoke"
+      },
+      "checks": [
+        {
+          "name": "github_repo_metadata",
+          "status": "pass",
+          "ok": true,
+          "api_url": "https://api.github.com/repos/zerocore-ai/microsandbox",
+          "full_name": "superradcompany/microsandbox",
+          "html_url": "https://github.com/superradcompany/microsandbox",
+          "description": "\ud83e\uddf1 secure, local and programmable sandboxes for AI agents",
+          "stars": 5867,
+          "forks": 282,
+          "open_issues": 41,
+          "default_branch": "main",
+          "pushed_at": "2026-04-28T10:40:57Z",
+          "updated_at": "2026-04-28T19:56:18Z",
+          "archived": false,
+          "license_spdx": "Apache-2.0",
+          "license_name": "Apache License 2.0",
+          "topics": [
+            "agents",
+            "ai",
+            "container",
+            "docker",
+            "linux",
+            "macos",
+            "mcp",
+            "nodejs",
+            "orchestration",
+            "rust",
+            "sandbox",
+            "sandboxing",
+            "security",
+            "self-hosted",
+            "typescript",
+            "virtualization",
+            "vm",
+            "windows"
+          ]
+        },
+        {
+          "name": "pypi_index",
+          "status": "pass",
+          "package": "microsandbox",
+          "attempts": [
+            {
+              "command": [
+                "/home/josh/.hermes/hermes-agent/venv/bin/python",
+                "-m",
+                "pip",
+                "index",
+                "versions",
+                "microsandbox"
+              ],
+              "ok": false,
+              "returncode": 1,
+              "stdout": "",
+              "stderr": "/home/josh/.hermes/hermes-agent/venv/bin/python: No module named pip",
+              "timeout_seconds": 45
+            },
+            {
+              "command": [
+                "/usr/sbin/pip",
+                "index",
+                "versions",
+                "microsandbox"
+              ],
+              "ok": true,
+              "returncode": 0,
+              "stdout": "microsandbox (0.4.0)\nAvailable versions: 0.4.0, 0.3.14, 0.3.13, 0.1.8, 0.1.7, 0.1.6, 0.1.5, 0.1.4, 0.1.3, 0.1.2, 0.1.0",
+              "stderr": "",
+              "timeout_seconds": 45
+            }
+          ],
+          "latest": "0.4.0",
+          "available_versions_sample": [
+            "0.4.0",
+            "0.3.14",
+            "0.3.13",
+            "0.1.8",
+            "0.1.7",
+            "0.1.6",
+            "0.1.5",
+            "0.1.4",
+            "0.1.3",
+            "0.1.2"
+          ],
+          "available_version_count": 11,
+          "note": "Used current Python's pip first; fell back to pip executable only when current Python has no pip."
+        },
+        {
+          "name": "python_import_spec",
+          "target": "microsandbox",
+          "status": "warn",
+          "found": false,
+          "origin": null
+        },
+        {
+          "name": "cli_presence",
+          "target": "microsandbox",
+          "status": "warn",
+          "path": null
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    "json_path": "outputs/become-manus/sandbox-bakeoff.json",
+    "markdown_path": "outputs/become-manus/sandbox-bakeoff.md"
+  }
+}

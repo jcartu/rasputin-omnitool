@@ -1,0 +1,13 @@
+{
+  "returncode": 0,
+  "stdout": "{\"calculation\": 45, \"cwd\": \"/tmp/become-manus-sandbox-vyrj8o5v\", \"env_allowlist\": [\"BECOME_MANUS_SANDBOX\"]}",
+  "stderr": "",
+  "sandbox_output_exists": true,
+  "sandbox_output": {
+    "cwd": "/tmp/become-manus-sandbox-vyrj8o5v",
+    "env_allowlist": [
+      "BECOME_MANUS_SANDBOX"
+    ],
+    "calculation": 45
+  }
+}

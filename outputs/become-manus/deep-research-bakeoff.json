@@ -1,0 +1,287 @@
+{
+  "summary": {
+    "schema_version": 1,
+    "generated_at": "2026-04-28T19:58:40.182559+00:00",
+    "status": "warn",
+    "candidate_count": 2,
+    "status_counts": {
+      "pass": 0,
+      "warn": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "capability_complete_count": 0,
+    "metadata_ready_count": 2
+  },
+  "kind": "deep-research-bakeoff",
+  "run_external": true,
+  "safety_policy": {
+    "host_mutation": "none_intended",
+    "forbidden_in_this_phase": [
+      "docker run",
+      "package install",
+      "service start",
+      "credential use"
+    ],
+    "completion_rule": "capability_complete remains false until an E2E/smoke artifact passes"
+  },
+  "records": [
+    {
+      "candidate": {
+        "name": "Crawl4AI",
+        "capability": "deep_research",
+        "repo": "unclecode/crawl4ai",
+        "url": "https://github.com/unclecode/crawl4ai",
+        "license": "Apache-2.0",
+        "role": "LLM-friendly web crawler/extractor",
+        "package_manager": "pypi",
+        "package_name": "crawl4ai",
+        "import_names": [
+          "crawl4ai"
+        ],
+        "cli_names": [
+          "crawl4ai-setup",
+          "crawl4ai-doctor"
+        ],
+        "readiness_goal": "repo_and_pypi_metadata_ready_for_safe_followup",
+        "host_mutation_risk": "install may download browser/runtime assets; this bakeoff avoids installs and browser setup",
+        "e2e_scope": "deferred_until_crawl_smoke_with_fixture_url",
+        "notes": "Import/CLI checks are best-effort against the current environment only."
+      },
+      "status": "warn",
+      "readiness": {
+        "metadata_ready": true,
+        "local_import_available": false,
+        "local_cli_available": false,
+        "capability_complete": false,
+        "capability_claim": "not_complete_metadata_only_no_e2e_smoke_run",
+        "next_e2e_needed": "deferred_until_crawl_smoke_with_fixture_url"
+      },
+      "checks": [
+        {
+          "name": "github_repo_metadata",
+          "status": "pass",
+          "ok": true,
+          "api_url": "https://api.github.com/repos/unclecode/crawl4ai",
+          "full_name": "unclecode/crawl4ai",
+          "html_url": "https://github.com/unclecode/crawl4ai",
+          "description": "\ud83d\ude80\ud83e\udd16 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+          "stars": 64716,
+          "forks": 6624,
+          "open_issues": 77,
+          "default_branch": "main",
+          "pushed_at": "2026-04-24T16:53:57Z",
+          "updated_at": "2026-04-28T19:24:03Z",
+          "archived": false,
+          "license_spdx": "Apache-2.0",
+          "license_name": "Apache License 2.0",
+          "topics": []
+        },
+        {
+          "name": "pypi_index",
+          "status": "pass",
+          "package": "crawl4ai",
+          "attempts": [
+            {
+              "command": [
+                "/home/josh/.hermes/hermes-agent/venv/bin/python",
+                "-m",
+                "pip",
+                "index",
+                "versions",
+                "crawl4ai"
+              ],
+              "ok": false,
+              "returncode": 1,
+              "stdout": "",
+              "stderr": "/home/josh/.hermes/hermes-agent/venv/bin/python: No module named pip",
+              "timeout_seconds": 45
+            },
+            {
+              "command": [
+                "/usr/sbin/pip",
+                "index",
+                "versions",
+                "crawl4ai"
+              ],
+              "ok": true,
+              "returncode": 0,
+              "stdout": "crawl4ai (0.8.6)\nAvailable versions: 0.8.6, 0.8.5, 0.8.0, 0.7.8, 0.7.7, 0.7.6, 0.7.5, 0.7.4, 0.7.3, 0.7.2, 0.7.1, 0.7.0, 0.6.3, 0.6.2, 0.6.1, 0.6.0, 0.5.0.post8, 0.5.0.post7, 0.5.0.post6, 0.5.0.post5, 0.5.0.post4, 0.5.0.post3, 0.5.0.post2, 0.5.0.post1, 0.5.0, 0.4.248, 0.4.247, 0.4.246, 0.4.245, 0.4.244, 0.4.243, 0.4.242, 0.4.241, 0.4.24, 0.4.23, 0.4.22, 0.4.21, 0.4.1, 0.4.0, 0.3.746, 0.3.745, 0.3.744, 0.3.743, 0.3.742, 0.3.741, 0.3.731, 0.3.74, 0.3.73, 0.3.72, 0.3.71, 0.3.8, 0.3.7, 0.3.6, 0.3.5, 0.3.4, 0.3.3, 0.3.2, 0.3.1, 0.3.0",
+              "stderr": "",
+              "timeout_seconds": 45
+            }
+          ],
+          "latest": "0.8.6",
+          "available_versions_sample": [
+            "0.8.6",
+            "0.8.5",
+            "0.8.0",
+            "0.7.8",
+            "0.7.7",
+            "0.7.6",
+            "0.7.5",
+            "0.7.4",
+            "0.7.3",
+            "0.7.2"
+          ],
+          "available_version_count": 59,
+          "note": "Used current Python's pip first; fell back to pip executable only when current Python has no pip."
+        },
+        {
+          "name": "python_import_spec",
+          "target": "crawl4ai",
+          "status": "warn",
+          "found": false,
+          "origin": null
+        },
+        {
+          "name": "cli_presence",
+          "target": "crawl4ai-setup",
+          "status": "warn",
+          "path": null
+        },
+        {
+          "name": "cli_presence",
+          "target": "crawl4ai-doctor",
+          "status": "warn",
+          "path": null
+        }
+      ]
+    },
+    {
+      "candidate": {
+        "name": "Docling",
+        "capability": "deep_research",
+        "repo": "docling-project/docling",
+        "url": "https://github.com/docling-project/docling",
+        "license": "MIT",
+        "role": "PDF/Office/document parsing and conversion",
+        "package_manager": "pypi",
+        "package_name": "docling",
+        "import_names": [
+          "docling"
+        ],
+        "cli_names": [
+          "docling"
+        ],
+        "readiness_goal": "repo_and_pypi_metadata_ready_for_safe_followup",
+        "host_mutation_risk": "install can be dependency-heavy; this bakeoff avoids installing or mutating global Python state",
+        "e2e_scope": "deferred_until_fixture_document_parse_smoke",
+        "notes": "PyPI metadata and local import/CLI presence are checked without installation."
+      },
+      "status": "warn",
+      "readiness": {
+        "metadata_ready": true,
+        "local_import_available": false,
+        "local_cli_available": false,
+        "capability_complete": false,
+        "capability_claim": "not_complete_metadata_only_no_e2e_smoke_run",
+        "next_e2e_needed": "deferred_until_fixture_document_parse_smoke"
+      },
+      "checks": [
+        {
+          "name": "github_repo_metadata",
+          "status": "pass",
+          "ok": true,
+          "api_url": "https://api.github.com/repos/docling-project/docling",
+          "full_name": "docling-project/docling",
+          "html_url": "https://github.com/docling-project/docling",
+          "description": "Get your documents ready for gen AI",
+          "stars": 58725,
+          "forks": 4030,
+          "open_issues": 879,
+          "default_branch": "main",
+          "pushed_at": "2026-04-28T19:54:48Z",
+          "updated_at": "2026-04-28T19:33:13Z",
+          "archived": false,
+          "license_spdx": "MIT",
+          "license_name": "MIT License",
+          "topics": [
+            "ai",
+            "convert",
+            "document-parser",
+            "document-parsing",
+            "documents",
+            "docx",
+            "html",
+            "markdown",
+            "pdf",
+            "pdf-converter",
+            "pdf-to-json",
+            "pdf-to-text",
+            "pptx",
+            "tables",
+            "xlsx"
+          ]
+        },
+        {
+          "name": "pypi_index",
+          "status": "pass",
+          "package": "docling",
+          "attempts": [
+            {
+              "command": [
+                "/home/josh/.hermes/hermes-agent/venv/bin/python",
+                "-m",
+                "pip",
+                "index",
+                "versions",
+                "docling"
+              ],
+              "ok": false,
+              "returncode": 1,
+              "stdout": "",
+              "stderr": "/home/josh/.hermes/hermes-agent/venv/bin/python: No module named pip",
+              "timeout_seconds": 45
+            },
+            {
+              "command": [
+                "/usr/sbin/pip",
+                "index",
+                "versions",
+                "docling"
+              ],
+              "ok": true,
+              "returncode": 0,
+              "stdout": "docling (2.91.0)\nAvailable versions: 2.91.0, 2.90.0, 2.89.0, 2.88.0, 2.87.0, 2.86.0, 2.85.0, 2.84.0, 2.83.0, 2.82.0, 2.81.0, 2.80.0, 2.79.0, 2.78.0, 2.77.0, 2.76.0, 2.75.0, 2.74.0, 2.73.1, 2.73.0, 2.72.0, 2.71.0, 2.70.0, 2.69.1, 2.69.0, 2.68.0, 2.67.0, 2.66.0, 2.65.0, 2.64.1, 2.64.0, 2.63.0, 2.62.0, 2.61.2, 2.61.1, 2.61.0, 2.60.1, 2.60.0, 2.59.0, 2.58.0, 2.57.0, 2.56.1, 2.56.0, 2.55.1, 2.55.0, 2.54.0, 2.53.0, 2.52.0, 2.51.0, 2.50.0, 2.49.0, 2.48.0, 2.47.1, 2.47.0, 2.46.0, 2.45.0, 2.44.0, 2.43.0, 2.42.2, 2.42.1, 2.42.0, 2.41.0, 2.40.0, 2.39.0, 2.38.1, 2.38.0, 2.37.0, 2.36.1, 2.36.0, 2.35.0, 2.34.0, 2.33.0, 2.32.0, 2.31.2, 2.31.1, 2.31.0, 2.30.0, 2.29.0, 2.28.4, 2.28.3, 2.28.2, 2.28.1, 2.28.0, 2.27.0, 2.26.0, 2.25.2, 2.25.1, 2.25.0, 2.24.0, 2.23.1, 2.23.0, 2.22.0, 2.21.0, 2.20.0, 2.19.0, 2.18.0, 2.17.0, 2.16.0, 2.15.1, 2.15.0, 2.14.0, 2.13.0, 2.12.0, 2.11.0, 2.10.0, 2.9.0, 2.8.3, 2.8.2, 2.8.1, 2.8.0, 2.7.1, 2.7.0, 2.6.0, 2.5.2, 2.5.1, 2.5.0, 2.4.2, 2.4.1, 2.4.0, 2.3.1, 2.3.0, 2.2.1, 2.2.0, 2.1.0, 2.0.0, 1.20.0, 1.19.1, 1.19.0, 1.18.0, 1.17.0, 1.16.1, 1.16.0, 1.15.0, 1.14.0, 1.13.1, 1.13.0, 1.12.2, 1.12.1, 1.12.0, 1.11.0, 1.10.0, 1.9.0, 1.8.5, 1.8.4, 1.8.3, 1.8.2, 1.8.1, 1.8.0, 1.7.1, 1.7.0, 1.6.3, 1.6.2, 1.6.1, 1.6.0, 1.5.0, 1.4.0, 1.3.0, 1.2.1, 1.2.0, 1.1.2, 1.1.1, 1.1.0, 1.0.2, 1.0.1, 1.0.0, 0.4.0, 0.3.1, 0.3.0, 0.2.0, 0.1.2, 0.1.1, 0.1.0",
+              "stderr": "",
+              "timeout_seconds": 45
+            }
+          ],
+          "latest": "2.91.0",
+          "available_versions_sample": [
+            "2.91.0",
+            "2.90.0",
+            "2.89.0",
+            "2.88.0",
+            "2.87.0",
+            "2.86.0",
+            "2.85.0",
+            "2.84.0",
+            "2.83.0",
+            "2.82.0"
+          ],
+          "available_version_count": 172,
+          "note": "Used current Python's pip first; fell back to pip executable only when current Python has no pip."
+        },
+        {
+          "name": "python_import_spec",
+          "target": "docling",
+          "status": "warn",
+          "found": false,
+          "origin": null
+        },
+        {
+          "name": "cli_presence",
+          "target": "docling",
+          "status": "warn",
+          "path": null
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    "json_path": "outputs/become-manus/deep-research-bakeoff.json",
+    "markdown_path": "outputs/become-manus/deep-research-bakeoff.md"
+  }
+}

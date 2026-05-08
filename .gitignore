@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+.venv/
+venv/
+*.whl
+.pytest_cache/
+node_modules/
+
+# Outputs (regenerable)
+outputs/become-manus/runtime-e2e/.venv/
+outputs/become-manus/runtime-e2e/playwright-browsers/
+outputs/become-manus/runtime-e2e/pip-cache/
+outputs/become-manus/runtime-e2e/npm-cache/
+outputs/become-manus/runtime-e2e/cache/
+outputs/become-manus/runtime-e2e/home/
+outputs/become-manus/runtime-e2e/crawl4ai-home/
+
+# Large binaries
+*.so
+*.dll
+*.dylib

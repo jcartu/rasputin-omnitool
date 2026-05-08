@@ -1,0 +1,10 @@
+{
+  "best_source": "outputs/become-manus/runtime-e2e/fixtures/docling/become-manus-docling-fixture.docx",
+  "contains": {
+    "become_manus": true,
+    "docling": true
+  },
+  "errors": [],
+  "markdown_chars": 192,
+  "ok": true
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:22:46.626185+00:00",
+  "status": "pass",
+  "capability": "local_process_sandbox_smoke",
+  "scope": "non_destructive_no_container_no_service_no_install",
+  "summary": {
+    "subprocess_returncode": 0,
+    "host_mutation_detected": false,
+    "capability_complete": true,
+    "note": "This is a local harness smoke proof, not yet agent-infra/microsandbox runtime parity."
+  },
+  "artifacts": {
+    "report_json": "outputs/become-manus/sandbox-smoke/sandbox-smoke.json",
+    "transcript_json": "outputs/become-manus/sandbox-smoke/sandbox-transcript.json"
+  }
+}

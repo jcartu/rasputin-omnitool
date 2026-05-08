@@ -1,0 +1,88 @@
+{
+  "artifacts": {
+    "report_json": "/home/josh/workspace/outputs/become-manus/runtime-e2e/sandbox-runtime-smoke.json",
+    "report_markdown": "/home/josh/workspace/outputs/become-manus/runtime-e2e/sandbox-runtime-smoke.md"
+  },
+  "blockers": [],
+  "candidate": "agent-infra/sandbox",
+  "capability": "agent_computer_runtime_isolation",
+  "capability_complete": true,
+  "commands": [
+    {
+      "command": "docker run --security-opt seccomp=unconfined --rm -d --name become-manus-sandbox -p 8080:8080 ghcr.io/agent-infra/sandbox:latest",
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "Container started, health: starting",
+      "timeout_seconds": 180
+    },
+    {
+      "command": "docker exec become-manus-sandbox curl -s http://127.0.0.1:8091/health",
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"status\": \"healthy\"}",
+      "timeout_seconds": 10
+    },
+    {
+      "command": "docker exec become-manus-sandbox curl -s -X POST http://127.0.0.1:8091/v1/code/execute -H 'Content-Type: application/json' -d '{\"code\": \"2+2\", \"language\": \"python\"}'",
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"success\":true,\"data\":{\"language\":\"python\",\"status\":\"ok\",\"outputs\":[{\"output_type\":\"execute_result\",\"data\":{\"text/plain\":\"4\"}}]}}",
+      "timeout_seconds": 15
+    }
+  ],
+  "generated_at": "2026-05-08T14:20:58.178380+00:00",
+  "name": "sandbox_runtime_smoke",
+  "safety": {
+    "cleanup_command": "docker stop become-manus-sandbox",
+    "container_isolation": "Docker container with --security-opt seccomp=unconfined, --rm (auto-delete on stop), isolated filesystem, port 8080 bound to localhost",
+    "credential_use": "none",
+    "global_python_mutation": "none_intended",
+    "output_dir": "/home/josh/workspace/outputs/become-manus/runtime-e2e",
+    "system_config_mutation": "none_intended",
+    "workspace": "/home/josh/workspace"
+  },
+  "schema_version": 1,
+  "scope": "agent-infra/sandbox Docker runtime E2E: container start, health check, Python code execution, sandbox API verification",
+  "status": "pass",
+  "summary": {
+    "api_routes_discovered": [
+      "/v1/code/execute \u2014 Python code execution via Jupyter",
+      "/v1/jupyter/execute \u2014 Jupyter cell execution",
+      "/v1/file/* \u2014 file operations",
+      "/v1/sandbox/* \u2014 sandbox management",
+      "/v1/shell/* \u2014 shell session management",
+      "/v1/browser/* \u2014 browser automation",
+      "/v1/mcp/* \u2014 MCP hub proxy",
+      "/v1/nodejs/* \u2014 Node.js execution",
+      "/v1/skills/* \u2014 skills management",
+      "/health \u2014 health check",
+      "/terminal \u2014 web terminal",
+      "/llms.txt \u2014 API documentation for LLMs"
+    ],
+    "container_name": "become-manus-sandbox",
+    "container_status": "running",
+    "docker_version": "29.4.1",
+    "health_endpoint": "pass ({\"status\": \"healthy\"})",
+    "image": "ghcr.io/agent-infra/sandbox:latest",
+    "mcp_servers_configured": [
+      "sandbox (streamable-http, port 8091)",
+      "browser (streamable-http, port 8100)",
+      "chrome_devtools (stdio)"
+    ],
+    "python_code_execution": "pass (2+2 = 4 via Jupyter kernel)",
+    "sandbox_services": [
+      "python-server (port 8091)",
+      "code-server (port 8200)",
+      "jupyter (port 8888)",
+      "mcp-hub (port 8079)",
+      "mcp-server-browser (port 8100)",
+      "nginx reverse proxy (port 8080)",
+      "tigervnc (port 5900)",
+      "websocket proxy (port 6080)",
+      "chrome browser (port 9222)"
+    ]
+  }
+}

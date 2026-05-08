@@ -1,0 +1,12 @@
+{
+  "attempt_errors": [],
+  "contains": {
+    "become_manus": true,
+    "crawl4ai": true
+  },
+  "error_message": "",
+  "markdown_chars": 298,
+  "ok": true,
+  "success": true,
+  "url": "http://127.0.0.1:43511/index.html"
+}

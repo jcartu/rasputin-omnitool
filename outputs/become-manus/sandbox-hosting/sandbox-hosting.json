@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:59:26.989710+00:00",
+  "status": "pass",
+  "capability": "sandbox_hosting_e2e",
+  "scope": "docker_sandbox_static_serve",
+  "checks": [
+    {
+      "name": "docker_available",
+      "status": "pass",
+      "detail": "v29.4.1"
+    },
+    {
+      "name": "sandbox_running",
+      "status": "pass",
+      "detail": "Container 'become-manus-sandbox' running=True"
+    },
+    {
+      "name": "site_served",
+      "status": "pass",
+      "detail": "HTTP 200, title='BecomeManus \u2014 AI-Powered Development Platform'"
+    },
+    {
+      "name": "site_has_styles",
+      "status": "pass",
+      "detail": "CSS present"
+    },
+    {
+      "name": "site_has_interactivity",
+      "status": "pass",
+      "detail": "JS present"
+    },
+    {
+      "name": "site_responsive",
+      "status": "pass",
+      "detail": "Viewport meta present"
+    },
+    {
+      "name": "site_design_tokens",
+      "status": "pass",
+      "detail": "Dark BG=True, Font=True"
+    }
+  ],
+  "summary": {
+    "docker_version": "29.4.1",
+    "container_name": "become-manus-sandbox",
+    "container_running": true,
+    "target_url": "http://127.0.0.1:8080/site/",
+    "http_status": 200,
+    "page_title": "BecomeManus \u2014 AI-Powered Development Platform",
+    "capability_complete": true
+  },
+  "artifacts": {
+    "report_json": "outputs/become-manus/sandbox-hosting/sandbox-hosting.json"
+  }
+}

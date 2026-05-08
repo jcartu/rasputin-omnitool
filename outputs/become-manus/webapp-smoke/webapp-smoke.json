@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:22:48.125377+00:00",
+  "status": "pass",
+  "capability": "static_webapp_generation_and_serve_smoke",
+  "scope": "local_static_app_no_external_deploy_no_credentials",
+  "summary": {
+    "http_status": 200,
+    "page_title": "Become Manus Static App",
+    "served_url": "http://127.0.0.1:43975/index.html",
+    "capability_complete": true,
+    "error": ""
+  },
+  "artifacts": {
+    "report_json": "outputs/become-manus/webapp-smoke/webapp-smoke.json",
+    "app_dir": "outputs/become-manus/webapp-smoke/app"
+  }
+}

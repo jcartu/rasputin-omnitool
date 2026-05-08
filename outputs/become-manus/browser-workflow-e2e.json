@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:33:40.539612+00:00",
+  "workflows": {
+    "example_com": {
+      "name": "example.com title and links",
+      "status": "pass",
+      "passed": true,
+      "url": "https://example.com",
+      "data": {
+        "title": "Example Domain",
+        "links": [
+          {
+            "href": "https://iana.org/domains/example",
+            "text": "Learn more"
+          }
+        ],
+        "link_count": 1
+      }
+    },
+    "github_docling": {
+      "name": "github docling repo extraction",
+      "status": "pass",
+      "passed": true,
+      "url": "https://github.com/docling-project/docling",
+      "data": {
+        "repo_name": "GitHub - docling-project/docling: Get your documents ready for gen AI",
+        "star_count": "59.4k stars",
+        "description": "Get your documents ready for gen AI. Contribute to docling-project/docling development by creating an account on GitHub."
+      }
+    },
+    "google_search": {
+      "name": "google search become manus oss",
+      "status": "pass",
+      "passed": true,
+      "url": "https://www.google.com/search?q=become+manus+oss",
+      "data": {
+        "engine": "duckduckgo",
+        "titles": [
+          "See What\u2019s DuckDuckNew"
+        ],
+        "title_count": 1,
+        "blocked_by_captcha": true
+      }
+    }
+  },
+  "safety": {
+    "headless": true,
+    "no_persistence": true,
+    "isolated_context": true
+  }
+}

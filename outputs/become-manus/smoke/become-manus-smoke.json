@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-04-28T19:49:01.118114+00:00",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "python",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "Python 3.14.4",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "node",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "v25.9.0",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "npm",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "11.13.0",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "hermes",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "Hermes Agent v0.11.0 (2026.4.23)\nProject: /home/josh/.hermes/hermes-agent\nPython: 3.11.14\nOpenAI SDK: 2.32.0\nUpdate available: 1 commit behind \u2014 run 'hermes update'",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "docker",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "Docker version 29.4.1, build 055a478ea9",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "playwright_mcp_config",
+      "status": "pass",
+      "details": {
+        "configured": true,
+        "config_path": "/home/josh/.hermes/config.yaml"
+      }
+    },
+    {
+      "name": "playwright_mcp_connectivity",
+      "status": "pass",
+      "details": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "Testing 'playwright'...\n  Transport: stdio \u2192 npx\n  Auth: none\n  \u2713 Connected (2462ms)\n  \u2713 Tools discovered: 22\n\n    browser_close                        Close the page\n    browser_resize                       Resize the browser window\n    browser_console_messages             Returns all console messages\n    browser_handle_dialog                Handle a dialog\n    browser_evaluate                     Evaluate JavaScript expression on page or element\n    browser_file_upload                  Upload one or multiple files\n    browser_drop                         Drop files or MIME-typed data onto an element, as if dr...\n    browser_fill_form                    Fill multiple form fields\n    browser_press_key                    Press a key on the keyboard\n    browser_type                         Type text into editable element\n    browser_navigate                     Navigate to a URL\n    browser_navigate_back                Go back to the previous page in the history\n    browser_network_requests             Returns all network requests since loading the page\n    browser_run_code                     Run Playwright code snippet\n    browser_take_screenshot              Take a screenshot of the current page. You can't perfor...\n    browser_snapshot                     Capture accessibility snapshot of the current page, thi...\n    browser_click                        Perform click on a web page\n    browser_drag                         Perform drag and drop between two elements\n    browser_hover                        Hover over element on page\n    browser_select_option                Select an option in a dropdown\n    browser_tabs                         List, create, close, or select a browser tab.\n    browser_wait_for                     Wait for text to appear or disappear or a specified tim...",
+        "stderr": ""
+      }
+    }
+  ],
+  "paths": {
+    "cwd": "/home/josh/workspace",
+    "hermes": "/home/josh/.local/bin/hermes",
+    "docker": "/usr/bin/docker",
+    "node": "/usr/bin/node"
+  }
+}

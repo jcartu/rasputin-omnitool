@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:59:28.931017+00:00",
+  "summary": {
+    "total": 4,
+    "approved_count": 0,
+    "conditional_count": 3,
+    "review_required_count": 1
+  },
+  "reviews": [
+    {
+      "name": "OpenHands",
+      "repo": "All-Hands-AI/OpenHands",
+      "url": "https://github.com/All-Hands-AI/OpenHands",
+      "capability": "coding_agents",
+      "core_license": "MIT License",
+      "core_license_type": "dual-license",
+      "commercial_use": "Allowed for core (MIT)",
+      "key_obligations": [
+        "Include MIT copyright notice in core usage",
+        "Enterprise/ directory uses PolyForm Free Trial 1.0.0 \u2014 30-day trial only, requires commercial license beyond",
+        "Do not distribute enterprise features without license"
+      ],
+      "enterprise_license": "PolyForm Free Trial 1.0.0",
+      "enterprise_restricted": true,
+      "recent_changes": "Enterprise license updated Apr 14 2026 (commit 4cdf88d). Main LICENSE clarified dual-license structure Sep 2 2025.",
+      "spdx_recommendation": "MIT (core); PolyForm-Free-Trial-1.0.0 (enterprise/)",
+      "recommendation": "conditional",
+      "reviewed_at": "2026-05-08T00:00:00+00:00"
+    },
+    {
+      "name": "Activepieces",
+      "repo": "activepieces/activepieces",
+      "url": "https://github.com/activepieces/activepieces",
+      "capability": "workflow_integrations",
+      "core_license": "MIT License",
+      "core_license_type": "dual-license",
+      "commercial_use": "Allowed for community edition (MIT)",
+      "key_obligations": [
+        "Include MIT copyright notice",
+        "Enterprise features (packages/ee/, packages/server/api/src/app/ee) require commercial license",
+        "Do not redistribute enterprise features"
+      ],
+      "enterprise_license": "Activepieces Enterprise License (proprietary)",
+      "enterprise_restricted": true,
+      "recent_changes": "LICENSE last updated Feb 15 2024. No license type changes since inception \u2014 always MIT + commercial dual license.",
+      "spdx_recommendation": "MIT (community); LicenseRef-Activepieces-Enterprise (ee/)",
+      "recommendation": "conditional",
+      "reviewed_at": "2026-05-08T00:00:00+00:00"
+    },
+    {
+      "name": "PostHog",
+      "repo": "PostHog/posthog",
+      "url": "https://github.com/PostHog/posthog",
+      "capability": "analytics",
+      "core_license": "PostHog License (custom)",
+      "core_license_type": "source-available",
+      "commercial_use": "Allowed for self-hosted; competing SaaS restricted",
+      "key_obligations": [
+        "Custom license \u2014 not OSI-approved open source",
+        "Third-party components retain their original licenses",
+        "Enterprise features (ee/) use separate PostHog Enterprise License",
+        "Restrictions on offering competing hosted services"
+      ],
+      "enterprise_license": "PostHog Enterprise License (proprietary)",
+      "enterprise_restricted": true,
+      "recent_changes": "Custom license is a departure from standard OSI licenses. Historical shifts between license models observed.",
+      "spdx_recommendation": "LicenseRef-PostHog (main); LicenseRef-PostHog-Enterprise (ee/)",
+      "recommendation": "review_required",
+      "reviewed_at": "2026-05-08T00:00:00+00:00"
+    },
+    {
+      "name": "bolt.diy",
+      "repo": "stackblitz-labs/bolt.diy",
+      "url": "https://github.com/stackblitz-labs/bolt.diy",
+      "capability": "webapp_builder",
+      "core_license": "MIT License",
+      "core_license_type": "permissive",
+      "commercial_use": "Allowed (MIT), but WebContainer API requires commercial license for production for-profit use",
+      "key_obligations": [
+        "Include MIT copyright notice",
+        "WebContainers (StackBlitz tech) \u2014 free for prototypes/POCs, commercial license for production",
+        "No additional copyleft or network-use obligations in core codebase"
+      ],
+      "enterprise_license": "",
+      "enterprise_restricted": false,
+      "recent_changes": "Originally by Cole Medin, now community-driven. Active development with many contributors.",
+      "spdx_recommendation": "MIT (core); WebContainer API license separate",
+      "recommendation": "conditional",
+      "reviewed_at": "2026-05-08T00:00:00+00:00"
+    }
+  ]
+}

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BecomeManus — Analytics Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;510;590&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #08090a;
+      --panel: #0f1011;
+      --surface: #191a1b;
+      --elevated: #28282c;
+      --text: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-muted: #8a8f98;
+      --text-dim: #62666d;
+      --brand: #5e6ad2;
+      --accent: #7170ff;
+      --accent-hover: #828fff;
+      --success: #27a644;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: rgba(255,255,255,0.05);
+      --border-std: rgba(255,255,255,0.08);
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-feature-settings: 'cv01', 'ss03';
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Sidebar */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: 240px;
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+    }
+    .sidebar-brand {
+      font-size: 16px;
+      font-weight: 590;
+      color: var(--text);
+      padding: 0 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-brand svg { width: 20px; height: 20px; }
+    .sidebar-section {
+      font-size: 11px;
+      font-weight: 590;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 16px 12px 8px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 510;
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+    .sidebar-link.active { background: rgba(94,106,210,0.1); color: var(--accent); }
+
+    /* Main */
+    .main { flex: 1; margin-left: 240px; }
+    .topbar {
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(15,16,17,0.8);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 590;
+      color: var(--text);
+    }
+    .topbar-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-sm {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 510;
+      border: 1px solid var(--border-std);
+      background: rgba(255,255,255,0.02);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-sm:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .btn-sm.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+    .btn-sm.primary:hover { background: var(--accent-hover); }
+
+    .content { padding: 32px; }
+
+    /* Page sections */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* KPI Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      transition: all 0.2s;
+    }
+    .kpi-card:hover { border-color: var(--border-std); transform: translateY(-1px); }
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 510;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .kpi-value {
+      font-size: 36px;
+      font-weight: 510;
+      letter-spacing: -1.056px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .kpi-change {
+      font-size: 12px;
+      font-weight: 510;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .kpi-change.up { color: var(--success); }
+    .kpi-change.down { color: var(--danger); }
+
+    /* Charts */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 590;
+      color: var(--text);
+    }
+    .chart-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(39,166,68,0.1);
+      color: var(--success);
+      font-weight: 510;
+    }
+    .chart-container { position: relative; height: 280px; }
+
+    /* Table */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-title { font-size: 14px; font-weight: 590; color: var(--text); }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      text-align: left;
+      padding: 12px 24px;
+      font-size: 11px;
+      font-weight: 590;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 12px 24px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 510;
+    }
+    .status-badge.pass { background: rgba(39,166,68,0.1); color: var(--success); }
+    .status-badge.warn { background: rgba(245,158,11,0.1); color: var(--warning); }
+    .status-badge.fail { background: rgba(239,68,68,0.1); color: var(--danger); }
+
+    /* Activity feed */
+    .activity-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    .activity-dot.green { background: var(--success); }
+    .activity-dot.purple { background: var(--accent); }
+    .activity-dot.yellow { background: var(--warning); }
+    .activity-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .activity-time {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .kpi-row { grid-template-columns: 1fr; }
+      .content { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+          <line x1="12" y1="22" x2="12" y2="15.5"/>
+          <polyline points="22 8.5 12 15.5 2 8.5"/>
+        </svg>
+        BecomeManus
+      </div>
+      <div class="sidebar-section">Overview</div>
+      <a class="sidebar-link active" onclick="showPage('dashboard', this)">
+        <span>📊</span> Dashboard
+      </a>
+      <a class="sidebar-link" onclick="showPage('tests', this)">
+        <span>🧪</span> Test Results
+      </a>
+      <a class="sidebar-link" onclick="showPage('activity', this)">
+        <span>📡</span> Activity
+      </a>
+      <div class="sidebar-section">System</div>
+      <a class="sidebar-link" onclick="showPage('sandbox', this)">
+        <span>🔒</span> Sandbox
+      </a>
+      <a class="sidebar-link" onclick="showPage('license', this)">
+        <span>📋</span> Licenses
+      </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-title" id="page-title">Dashboard</div>
+        <div class="topbar-actions">
+          <button class="btn-sm" onclick="refreshData()">↻ Refresh</button>
+          <button class="btn-sm primary">Export</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Dashboard Page -->
+        <div id="page-dashboard" class="page active">
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-label">Capabilities Tested</div>
+              <div class="kpi-value">15</div>
+              <div class="kpi-change up">↑ All verified</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Tests Passing</div>
+              <div class="kpi-value">20/20</div>
+              <div class="kpi-change up">↑ +2 this session</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Design Systems</div>
+              <div class="kpi-value">54</div>
+              <div class="kpi-change up">↑ Ready to use</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Deploy Time</div>
+              <div class="kpi-value">&lt;30s</div>
+              <div class="kpi-change up">↑ Avg across all</div>
+            </div>
+          </div>
+
+          <div class="chart-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">Capability Progress Over Time</div>
+                <div class="chart-badge">Live</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="progressChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">License Distribution</div>
+                <div class="chart-badge">4 Projects</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="licenseChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">Test Results by Module</div>
+                <div class="chart-badge">20 Passed</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="testChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">Sandbox Health</div>
+                <div class="chart-badge">Healthy</div>
+              </div>
+              <div class="chart-container">
+                <canvas id="healthChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Test Results Page -->
+        <div id="page-tests" class="page">
+          <div class="table-card">
+            <div class="table-header">
+              <div class="table-title">Test Suite — All Results</div>
+              <button class="btn-sm">Filter</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Test</th>
+                  <th>Module</th>
+                  <th>Status</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Capability Matrix</td><td>capability_matrix</td><td><span class="status-badge pass">Pass</span></td><td>0.12s</td></tr>
+                <tr><td>Smoke Report Schema</td><td>smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.08s</td></tr>
+                <tr><td>Deliverable Artifacts</td><td>deliverables</td><td><span class="status-badge pass">Pass</span></td><td>1.24s</td></tr>
+                <tr><td>CLI Entrypoints</td><td>__main__</td><td><span class="status-badge pass">Pass</span></td><td>0.15s</td></tr>
+                <tr><td>Runtime E2E Schema</td><td>runtime_e2e</td><td><span class="status-badge pass">Pass</span></td><td>0.06s</td></tr>
+                <tr><td>Browser E2E Schema</td><td>browser_e2e</td><td><span class="status-badge pass">Pass</span></td><td>0.04s</td></tr>
+                <tr><td>Bakeoff Schema</td><td>bakeoff</td><td><span class="status-badge pass">Pass</span></td><td>0.09s</td></tr>
+                <tr><td>Bakeoff Parsers</td><td>bakeoff</td><td><span class="status-badge pass">Pass</span></td><td>0.03s</td></tr>
+                <tr><td>Research Pipeline</td><td>research_pipeline</td><td><span class="status-badge pass">Pass</span></td><td>0.11s</td></tr>
+                <tr><td>Sandbox Smoke</td><td>sandbox_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.07s</td></tr>
+                <tr><td>Webapp Smoke</td><td>webapp_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.18s</td></tr>
+                <tr><td>Coding Agents</td><td>coding_agents_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.05s</td></tr>
+                <tr><td>Workflow Smoke</td><td>workflow_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.04s</td></tr>
+                <tr><td>Mobile Smoke</td><td>mobile_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.06s</td></tr>
+                <tr><td>Analytics Smoke</td><td>analytics_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.05s</td></tr>
+                <tr><td>Mail Smoke</td><td>mail_smoke</td><td><span class="status-badge pass">Pass</span></td><td>0.04s</td></tr>
+                <tr><td>License Risk</td><td>license_review</td><td><span class="status-badge pass">Pass</span></td><td>0.03s</td></tr>
+                <tr><td>License Markdown</td><td>license_review</td><td><span class="status-badge pass">Pass</span></td><td>0.04s</td></tr>
+                <tr><td>Sandbox Hosting</td><td>sandbox_hosting</td><td><span class="status-badge pass">Pass</span></td><td>0.22s</td></tr>
+                <tr><td>Manual License</td><td>manual_license_review</td><td><span class="status-badge pass">Pass</span></td><td>0.05s</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Activity Page -->
+        <div id="page-activity" class="page">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Recent Activity</div>
+              <div class="chart-badge">Live</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Manual license review</strong> — 4 projects analyzed (OpenHands, Activepieces, PostHog, bolt.diy)</div>
+                <div class="activity-time">Just now</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Sandbox hosting E2E</strong> — Full pipeline verified, 6/6 checks passing</div>
+                <div class="activity-time">2 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot purple"></div>
+              <div>
+                <div class="activity-text"><strong>Linear-style landing page</strong> — Generated & deployed to sandbox nginx</div>
+                <div class="activity-time">5 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Test suite expanded</strong> — 20/20 passing (was 18/18)</div>
+                <div class="activity-time">5 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot purple"></div>
+              <div>
+                <div class="activity-text"><strong>Code execution API verified</strong> — Python 3.12.12 sandbox runtime active</div>
+                <div class="activity-time">Just now</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot purple"></div>
+              <div>
+                <div class="activity-text"><strong>Jupyter kernel access</strong> — 2 kernelspecs available (python3, python3.10)</div>
+                <div class="activity-time">Just now</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot yellow"></div>
+              <div>
+                <div class="activity-text"><strong>Capacitor CLI installed</strong> — Mobile publishing scaffolding ready</div>
+                <div class="activity-time">10 min ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot green"></div>
+              <div>
+                <div class="activity-text"><strong>Git commit ce4ba36</strong> — sandbox hosting + manual license review</div>
+                <div class="activity-time">5 min ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sandbox Page -->
+        <div id="page-sandbox" class="page">
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-label">Container Status</div>
+              <div class="kpi-value" style="font-size: 24px; color: var(--success);">● Healthy</div>
+              <div class="kpi-change up">become-manus-sandbox</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Exposed Ports</div>
+              <div class="kpi-value">3</div>
+              <div class="kpi-change up">8080, 18200, 18888</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Python Runtime</div>
+              <div class="kpi-value" style="font-size: 24px;">3.12</div>
+              <div class="kpi-change up">Execution API active</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Jupyter Kernels</div>
+              <div class="kpi-value">2</div>
+              <div class="kpi-change up">python3, python3.10</div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Sandbox Services</div>
+              <div class="chart-badge">All Active</div>
+            </div>
+            <table>
+              <thead><tr><th>Service</th><th>Port</th><th>Status</th><th>Details</th></tr></thead>
+              <tbody>
+                <tr><td>Nginx Gateway</td><td>8080</td><td><span class="status-badge pass">Active</span></td><td>Reverse proxy + code-server</td></tr>
+                <tr><td>Python Server</td><td>8091</td><td><span class="status-badge pass">Active</span></td><td>/v1/code/execute, /v1/shell/ws</td></tr>
+                <tr><td>Code Server</td><td>18200</td><td><span class="status-badge pass">Active</span></td><td>VS Code IDE</td></tr>
+                <tr><td>Jupyter Lab</td><td>18888</td><td><span class="status-badge pass">Active</span></td><td>2 kernelspecs</td></tr>
+                <tr><td>Browser MCP</td><td>8100</td><td><span class="status-badge pass">Active</span></td><td>Chrome DevTools Protocol</td></tr>
+                <tr><td>MCP Hub</td><td>8079</td><td><span class="status-badge pass">Active</span></td><td>Stateless MCP router</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- License Page -->
+        <div id="page-license" class="page">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Dual-Licensed Projects</div>
+              <div class="chart-badge">Manual Review</div>
+            </div>
+            <table>
+              <thead><tr><th>Project</th><th>Core License</th><th>Type</th><th>Recommendation</th></tr></thead>
+              <tbody>
+                <tr><td>OpenHands</td><td>MIT</td><td>Dual</td><td><span class="status-badge warn">Conditional</span></td></tr>
+                <tr><td>Activepieces</td><td>MIT</td><td>Dual</td><td><span class="status-badge warn">Conditional</span></td></tr>
+                <tr><td>bolt.diy</td><td>MIT</td><td>Dual</td><td><span class="status-badge warn">Conditional</span></td></tr>
+                <tr><td>PostHog</td><td>Custom</td><td>Source-available</td><td><span class="status-badge fail">Review</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Page navigation
+    function showPage(name, el) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      el.classList.add('active');
+      document.getElementById('page-title').textContent = el.textContent.trim();
+    }
+
+    // Chart defaults
+    Chart.defaults.color = '#8a8f98';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // Progress chart
+    new Chart(document.getElementById('progressChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May-01', 'May-08'],
+        datasets: [{
+          label: 'Capabilities',
+          data: [2, 4, 7, 10, 13, 15],
+          borderColor: '#7170ff',
+          backgroundColor: 'rgba(113,112,255,0.1)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#7170ff',
+        }, {
+          label: 'Tests',
+          data: [3, 5, 9, 13, 16, 20],
+          borderColor: '#27a644',
+          backgroundColor: 'rgba(39,166,68,0.1)',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: '#27a644',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // License donut
+    new Chart(document.getElementById('licenseChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Conditional', 'Review Required', 'Approved'],
+        datasets: [{
+          data: [3, 1, 0],
+          backgroundColor: ['#f59e0b', '#ef4444', '#27a644'],
+          borderWidth: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+
+    // Test bar chart
+    new Chart(document.getElementById('testChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Core', 'Smoke', 'E2E', 'Smoke\nAgents', 'Smoke\nMobile', 'Hosting', 'License'],
+        datasets: [{
+          label: 'Tests',
+          data: [3, 2, 3, 3, 3, 1, 2],
+          backgroundColor: '#7170ff',
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Health gauge
+    new Chart(document.getElementById('healthChart'), {
+      type: 'radar',
+      data: {
+        labels: ['Docker', 'Container', 'HTTP', 'CSS', 'JS', 'Responsive', 'Design'],
+        datasets: [{
+          label: 'Score',
+          data: [100, 100, 100, 100, 100, 100, 100],
+          backgroundColor: 'rgba(39,166,68,0.2)',
+          borderColor: '#27a644',
+          pointBackgroundColor: '#27a644',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            max: 100,
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            angleLines: { color: 'rgba(255,255,255,0.05)' },
+            pointLabels: { color: '#8a8f98' }
+          }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    function refreshData() {
+      document.querySelectorAll('.chart-badge').forEach(b => {
+        b.style.background = 'rgba(113,112,255,0.2)';
+        setTimeout(() => b.style.background = '', 300);
+      });
+    }
+  </script>
+</body>
+</html>

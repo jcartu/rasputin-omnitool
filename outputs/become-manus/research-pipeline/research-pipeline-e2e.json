@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-05-08T14:22:45.195034+00:00",
+  "status": "pass",
+  "capability": "deep_research_fixture_pipeline",
+  "scope": "fixture_e2e_no_external_network_no_package_install",
+  "summary": {
+    "citation_count": 3,
+    "parsed_document_count": 2,
+    "section_count": 3,
+    "claim_count": 6,
+    "capability_complete": true
+  },
+  "citations": [
+    {
+      "href": "https://github.com/microsoft/playwright-mcp",
+      "text": "Playwright MCP"
+    },
+    {
+      "href": "https://github.com/docling-project/docling",
+      "text": "Docling"
+    },
+    {
+      "href": "https://github.com/unclecode/crawl4ai",
+      "text": "Crawl4AI"
+    }
+  ],
+  "sections": [
+    {
+      "level": 1,
+      "heading": "Deep Research Fixture Memo",
+      "body": ""
+    },
+    {
+      "level": 2,
+      "heading": "Claims",
+      "body": "- Browser operators need deterministic screenshots and network traces.\n- Research pipelines need citation extraction and document parsing.\n- Deliverables should produce durable artifacts for verification."
+    },
+    {
+      "level": 2,
+      "heading": "Sources",
+      "body": "- Playwright MCP: browser automation through MCP.\n- Docling: document parsing.\n- Crawl4AI: crawler/extractor for LLM research workflows."
+    }
+  ],
+  "claims": [
+    "Browser operators need deterministic screenshots and network traces.",
+    "Research pipelines need citation extraction and document parsing.",
+    "Deliverables should produce durable artifacts for verification.",
+    "Playwright MCP: browser automation through MCP.",
+    "Docling: document parsing.",
+    "Crawl4AI: crawler/extractor for LLM research workflows."
+  ],
+  "artifacts": {
+    "report_json": "outputs/become-manus/research-pipeline/research-pipeline-e2e.json",
+    "report_md": "outputs/become-manus/research-pipeline/research-pipeline-e2e.md",
+    "fixture_dir": "outputs/become-manus/research-pipeline/fixtures"
+  }
+}
