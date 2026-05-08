@@ -75,8 +75,6 @@ def test_cli_entrypoints_help():
     assert "browser-e2e" in result.stdout
     assert "sandbox-bakeoff" in result.stdout
     assert "deep-research-bakeoff" in result.stdout
-    assert "research-pipeline-e2e" in result.stdout
-    assert "sandbox-smoke" in result.stdout
     assert "webapp-smoke" in result.stdout
     assert "runtime-e2e" in result.stdout
     assert "sandbox-hosting" in result.stdout
@@ -147,27 +145,6 @@ def test_bakeoff_parsers_extract_package_metadata():
     assert npm_payload["repository_url"].endswith("sandbox-sdk.git")
 
 
-def test_research_pipeline_fixture_e2e_schema(tmp_path):
-    from become_manus.research_pipeline import run_research_pipeline_e2e
-
-    report = run_research_pipeline_e2e(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] == "pass"
-    assert report["summary"]["citation_count"] >= 2
-    assert report["summary"]["parsed_document_count"] >= 2
-    assert Path(report["artifacts"]["report_md"]).exists()
-    assert Path(report["artifacts"]["report_json"]).exists()
-
-
-def test_sandbox_smoke_non_destructive_e2e_schema(tmp_path):
-    from become_manus.sandbox_smoke import run_sandbox_smoke
-
-    report = run_sandbox_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] == "pass"
-    assert report["summary"]["host_mutation_detected"] is False
-    assert report["summary"]["subprocess_returncode"] == 0
-    assert Path(report["artifacts"]["transcript_json"]).exists()
 
 
 def test_webapp_smoke_generates_and_serves_static_app(tmp_path):
@@ -182,71 +159,9 @@ def test_webapp_smoke_generates_and_serves_static_app(tmp_path):
     assert Path(report["artifacts"]["report_json"]).exists()
 
 
-def test_coding_agents_smoke_schema(tmp_path):
-    from become_manus.coding_agents_smoke import run_coding_agents_smoke
-
-    report = run_coding_agents_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "coding_agents"
-    assert "aider_available" in report["summary"]
-    assert "openhands_metadata_ok" in report["summary"]
-    assert (tmp_path / "coding-agents-smoke.json").exists()
-    assert report["safety"]["global_python_mutation"] == "none_intended"
 
 
-def test_workflow_smoke_schema(tmp_path):
-    from become_manus.workflow_smoke import run_workflow_smoke
 
-    report = run_workflow_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "workflow_integrations"
-    assert "mcp_servers_repo_ok" in report["summary"]
-    assert "mcp_servers_list_ok" in report["summary"]
-    assert "composio_github_ok" in report["summary"]
-    assert (tmp_path / "workflow-smoke.json").exists()
-    assert report["safety"]["global_python_mutation"] == "none_intended"
-
-
-def test_mobile_smoke_schema(tmp_path):
-    from become_manus.mobile_smoke import run_mobile_smoke
-
-    report = run_mobile_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "mobile_publishing"
-    assert "expo_cli_available" in report["summary"] or "expo_cli_version" in report["summary"]
-    assert "capacitor_cli_version" in report["summary"]
-    assert (tmp_path / "mobile-smoke.json").exists()
-    assert report["safety"]["global_python_mutation"] == "none_intended"
-
-
-def test_analytics_smoke_schema(tmp_path):
-    from become_manus.analytics_smoke import run_analytics_smoke
-
-    report = run_analytics_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "analytics"
-    assert "docker_version" in report["summary"]
-    assert "umami_github_ok" in report["summary"]
-    assert "posthog_github_ok" in report["summary"]
-    assert (tmp_path / "analytics-smoke.json").exists()
-    assert report["safety"]["global_python_mutation"] == "none_intended"
-
-
-def test_mail_smoke_schema(tmp_path, monkeypatch):
-    from become_manus.mail_smoke import run_mail_smoke
-
-    report = run_mail_smoke(tmp_path)
-    assert report["schema_version"] == 1
-    assert report["status"] in {"pass", "warn", "fail"}
-    assert report["capability"] == "mail_agent"
-    assert "himalaya_available" in report["summary"]
-    assert "hermes_email_configured" in report["summary"]
-    assert (tmp_path / "mail-smoke.json").exists()
-    assert report["safety"]["global_python_mutation"] == "none_intended"
 
 
 def test_license_review_classifies_repo_license_risk():

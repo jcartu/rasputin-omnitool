@@ -4,23 +4,16 @@ import argparse
 import json
 from pathlib import Path
 
-from .analytics_smoke import run_analytics_smoke
 from .bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
 from .browser_e2e import run_browser_e2e
 from .capability_matrix import all_candidates, candidate_summary
-from .coding_agents_smoke import run_coding_agents_smoke
 from .deliverables import create_demo_deliverables, validate_artifacts
 from .license_review import fetch_default_license_review, write_license_review
-from .mail_smoke import run_mail_smoke
 from .manual_license_review import write_manual_license_review
-from .mobile_smoke import run_mobile_smoke
-from .research_pipeline import run_research_pipeline_e2e
 from .runtime_e2e import run_runtime_e2e
 from .sandbox_hosting import run_sandbox_hosting
-from .sandbox_smoke import run_sandbox_smoke
 from .smoke import run_smoke_checks
 from .webapp_smoke import run_webapp_smoke
-from .workflow_smoke import run_workflow_smoke
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -53,12 +46,6 @@ def main(argv: list[str] | None = None) -> int:
     deep_research.add_argument("--output-dir", default="outputs/become-manus")
     deep_research.add_argument("--no-external", action="store_true", help="skip GitHub/PyPI metadata commands")
 
-    research_e2e = sub.add_parser("research-pipeline-e2e", help="run fixture-based research/citation/document-parse E2E")
-    research_e2e.add_argument("--output-dir", default="outputs/become-manus/research-pipeline")
-
-    sandbox_smoke = sub.add_parser("sandbox-smoke", help="run non-destructive local process sandbox smoke")
-    sandbox_smoke.add_argument("--output-dir", default="outputs/become-manus/sandbox-smoke")
-
     webapp_smoke = sub.add_parser("webapp-smoke", help="generate and serve a local static webapp smoke test")
     webapp_smoke.add_argument("--output-dir", default="outputs/become-manus/webapp-smoke")
 
@@ -67,21 +54,6 @@ def main(argv: list[str] | None = None) -> int:
     runtime_e2e.add_argument("--summary-path", default="outputs/become-manus/runtime-e2e-report.md")
     runtime_e2e.add_argument("--no-external", action="store_true", help="write schema/blocker reports without package installs")
     runtime_e2e.add_argument("--install-timeout", type=int, default=600, help="per-package install timeout in seconds")
-
-    coding_agents = sub.add_parser("coding-agents-smoke", help="run coding agents smoke test (aider + OpenHands)")
-    coding_agents.add_argument("--output-dir", default="outputs/become-manus/coding-agents")
-
-    workflow = sub.add_parser("workflow-smoke", help="run workflow integrations smoke test (MCP + Composio)")
-    workflow.add_argument("--output-dir", default="outputs/become-manus/workflow")
-
-    mobile = sub.add_parser("mobile-smoke", help="run mobile publishing smoke test (Expo + Capacitor)")
-    mobile.add_argument("--output-dir", default="outputs/become-manus/mobile")
-
-    analytics = sub.add_parser("analytics-smoke", help="run analytics smoke test (Umami + PostHog)")
-    analytics.add_argument("--output-dir", default="outputs/become-manus/analytics")
-
-    mail = sub.add_parser("mail-smoke", help="run mail agent smoke test (Himalaya + Hermes email)")
-    mail.add_argument("--output-dir", default="outputs/become-manus/mail")
 
     sandbox_hosting = sub.add_parser("sandbox-hosting", help="verify site deployment and serving in Docker sandbox")
     sandbox_hosting.add_argument("--output-dir", default="outputs/become-manus/sandbox-hosting")
@@ -132,16 +104,6 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, indent=2))
         return 0 if report["summary"]["status"] in {"pass", "warn"} else 1
 
-    if args.command == "research-pipeline-e2e":
-        report = run_research_pipeline_e2e(args.output_dir)
-        print(json.dumps(report, indent=2))
-        return 0 if report["status"] == "pass" else 1
-
-    if args.command == "sandbox-smoke":
-        report = run_sandbox_smoke(args.output_dir)
-        print(json.dumps(report, indent=2))
-        return 0 if report["status"] == "pass" else 1
-
     if args.command == "webapp-smoke":
         report = run_webapp_smoke(args.output_dir)
         print(json.dumps(report, indent=2))
@@ -156,31 +118,6 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(json.dumps(report, indent=2))
         return 0 if report["status"] in {"pass", "blocker", "warn"} else 1
-
-    if args.command == "coding-agents-smoke":
-        report = run_coding_agents_smoke(args.output_dir)
-        print(json.dumps(report, indent=2, default=str))
-        return 0 if report["status"] in {"pass", "warn"} else 1
-
-    if args.command == "workflow-smoke":
-        report = run_workflow_smoke(args.output_dir)
-        print(json.dumps(report, indent=2, default=str))
-        return 0 if report["status"] in {"pass", "warn"} else 1
-
-    if args.command == "mobile-smoke":
-        report = run_mobile_smoke(args.output_dir)
-        print(json.dumps(report, indent=2, default=str))
-        return 0 if report["status"] in {"pass", "warn"} else 1
-
-    if args.command == "analytics-smoke":
-        report = run_analytics_smoke(args.output_dir)
-        print(json.dumps(report, indent=2, default=str))
-        return 0 if report["status"] in {"pass", "warn"} else 1
-
-    if args.command == "mail-smoke":
-        report = run_mail_smoke(args.output_dir)
-        print(json.dumps(report, indent=2, default=str))
-        return 0 if report["status"] in {"pass", "warn"} else 1
 
     if args.command == "sandbox-hosting":
         report = run_sandbox_hosting(args.output_dir)

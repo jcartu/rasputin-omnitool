@@ -11,6 +11,16 @@ OSS replacement guide & integration harness for Manus-class agent capabilities.
 - Parameterized deliverable generator (CSV/MD/PDF/XLSX/PPTX)
 - Browser E2E via Playwright
 - Sandbox HTTP probe for agent-infra/sandbox
+- Runtime E2E tests for core capabilities
+- Webapp generation and serving smoke test
+- Sandbox hosting verification
+
+## What this does NOT provide
+
+- Verified production-ready implementations of all capabilities
+- Guaranteed compatibility across all tool combinations
+- Complete feature parity with Manus
+- Automated deployment or integration setup
 
 ## Quick start
 

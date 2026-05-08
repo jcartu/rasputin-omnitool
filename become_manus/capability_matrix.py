@@ -32,7 +32,7 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
         Candidate("SWE-agent", "https://github.com/SWE-agent/SWE-agent", "MIT", "SWE-bench style issue fixing"),
     ],
     "wide_research": [
-        Candidate("Hermes delegate_task", "local", "built-in", "parallel subagents with isolated context", True),
+        Candidate("LangGraph", "https://github.com/langchain-ai/langgraph", "MIT", "stateful agent graph orchestration", True),
         Candidate("LangGraph", "https://github.com/langchain-ai/langgraph", "MIT", "stateful agent graph orchestration"),
         Candidate("AutoGen", "https://github.com/microsoft/autogen", "MIT", "multi-agent orchestration"),
     ],
@@ -83,15 +83,15 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
         Candidate("n8n", "https://github.com/n8n-io/n8n", "source-available", "large connector library"),
     ],
     "mail_agent": [
-        Candidate("Hermes gateway email", "local", "built-in", "email platform adapter", True),
+        Candidate("Himalaya", "https://github.com/pimalaya/himalaya", "MIT", "terminal IMAP/SMTP client", True),
         Candidate("Himalaya", "https://github.com/pimalaya/himalaya", "MIT", "terminal IMAP/SMTP client"),
     ],
     "api_platform": [
-        Candidate("Hermes gateway API server", "local", "built-in", "task API/webhook base", True),
+        Candidate("FastAPI", "https://github.com/fastapi/fastapi", "MIT", "REST API service", True),
         Candidate("FastAPI", "https://github.com/fastapi/fastapi", "MIT", "REST API service"),
     ],
     "scheduled_tasks": [
-        Candidate("Hermes cron", "local", "built-in", "scheduled autonomous jobs", True),
+        Candidate("Apache Airflow", "https://github.com/apache/airflow", "Apache-2.0", "batch/data workflows", True),
         Candidate("Apache Airflow", "https://github.com/apache/airflow", "Apache-2.0", "batch/data workflows"),
         Candidate("Kestra", "https://github.com/kestra-io/kestra", "Apache-2.0 core", "event workflows"),
     ],
