@@ -6,7 +6,7 @@ import textwrap
 import zipfile
 from pathlib import Path
 
-from become_manus_kernel._venv_helpers import (
+from rasputin_omnitool._venv_helpers import (
     DEFAULT_INSTALL_TIMEOUT_SECONDS,
     DEFAULT_RUN_TIMEOUT_SECONDS,
     SCHEMA_VERSION,
@@ -73,7 +73,7 @@ def _write_docx_fixture(path: Path) -> None:
     document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:body>
-    <w:p><w:r><w:t>Become Manus Docling Fixture</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Rasputin Omnitool Docling Fixture</w:t></w:r></w:p>
     <w:p><w:r><w:t>Docling should parse this local DOCX fixture without external credentials.</w:t></w:r></w:p>
     <w:p><w:r><w:t>The document mentions Crawl4AI, Playwright MCP, sandbox runtimes, and durable reports.</w:t></w:r></w:p>
     <w:sectPr/>
@@ -104,9 +104,9 @@ def _write_html_fixture(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         """<!doctype html>
-<html><head><meta charset="utf-8"><title>Become Manus Runtime E2E Fixture</title></head>
+<html><head><meta charset="utf-8"><title>Rasputin Omnitool Runtime E2E Fixture</title></head>
 <body>
-<h1>Become Manus Runtime E2E Fixture</h1>
+<h1>Rasputin Omnitool Runtime E2E Fixture</h1>
 <p>Docling and Crawl4AI should be able to process this local static page.</p>
 <p>The fixture contains citations for Playwright MCP, Docling, Crawl4AI, and microsandbox.</p>
 <a href="https://github.com/docling-project/docling">Docling</a>
@@ -190,7 +190,7 @@ def run_docling_fixture_parse_e2e(
         report["blockers"].append(
             {
                 "reason": "Schema-only run skipped Docling installation and parsing.",
-                "next_command": f"{Path(sys.executable)} -m become_manus_kernel library-smoke --output-dir {output_dir}",
+                "next_command": f"{Path(sys.executable)} -m rasputin_omnitool library-smoke --output-dir {output_dir}",
                 "risk": "Installs Docling inside the disposable runtime-e2e venv and may download package/model artifacts into the output-local cache.",
             }
         )
@@ -246,7 +246,7 @@ def run_docling_fixture_parse_e2e(
                     result = converter.convert(source)
                     markdown = result.document.export_to_markdown()
                     contains = {
-                        "become_manus": "Become Manus" in markdown,
+                        "rasputin_omnitool": "Rasputin Omnitool" in markdown,
                         "docling": "Docling" in markdown,
                     }
                     current = {
@@ -351,7 +351,7 @@ def run_crawl4ai_fixture_crawl_e2e(
         report["blockers"].append(
             {
                 "reason": "Schema-only run skipped Crawl4AI installation and static-page crawling.",
-                "next_command": f"{Path(sys.executable)} -m become_manus_kernel library-smoke --output-dir {output_dir}",
+                "next_command": f"{Path(sys.executable)} -m rasputin_omnitool library-smoke --output-dir {output_dir}",
                 "risk": "Installs Crawl4AI in the disposable venv. Browser binaries must remain under PLAYWRIGHT_BROWSERS_PATH inside runtime-e2e; do not run global playwright install.",
             }
         )
@@ -463,7 +463,7 @@ def run_crawl4ai_fixture_crawl_e2e(
                                     markdown = extract_markdown(result)
                                     success = bool(getattr(result, "success", True))
                                     contains = {
-                                        "become_manus": "Become Manus" in markdown,
+                                        "rasputin_omnitool": "Rasputin Omnitool" in markdown,
                                         "crawl4ai": "Crawl4AI" in markdown,
                                     }
                                     return {

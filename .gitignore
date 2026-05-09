@@ -9,7 +9,7 @@ venv/
 .pytest_cache/
 node_modules/
 
-# Outputs (regenerable)
+# Outputs (regenerable) — historical 'become-manus' tree predates rename to rasputin-omnitool
 outputs/become-manus/runtime-e2e/.venv/
 outputs/become-manus/runtime-e2e/playwright-browsers/
 outputs/become-manus/runtime-e2e/pip-cache/
@@ -17,6 +17,13 @@ outputs/become-manus/runtime-e2e/npm-cache/
 outputs/become-manus/runtime-e2e/cache/
 outputs/become-manus/runtime-e2e/home/
 outputs/become-manus/runtime-e2e/crawl4ai-home/
+outputs/rasputin-omnitool/runtime-e2e/.venv/
+outputs/rasputin-omnitool/runtime-e2e/playwright-browsers/
+outputs/rasputin-omnitool/runtime-e2e/pip-cache/
+outputs/rasputin-omnitool/runtime-e2e/npm-cache/
+outputs/rasputin-omnitool/runtime-e2e/cache/
+outputs/rasputin-omnitool/runtime-e2e/home/
+outputs/rasputin-omnitool/runtime-e2e/crawl4ai-home/
 
 # Large binaries
 *.so

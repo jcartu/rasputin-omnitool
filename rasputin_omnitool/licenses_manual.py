@@ -120,7 +120,7 @@ def write_manual_license_review(output_dir: str | Path) -> dict:
 
     # Generate Markdown
     md_lines: list[str] = [
-        "# Become Manus — Manual License Review",
+        "# Rasputin Omnitool — Manual License Review",
         "",
         f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
         "",

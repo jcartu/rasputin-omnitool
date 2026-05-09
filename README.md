@@ -1,16 +1,22 @@
-# become-manus-kernel
+# rasputin-omnitool
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
+[![Tests](https://github.com/jcartu/rasputin-omnitool/actions/workflows/tests.yml/badge.svg)](https://github.com/jcartu/rasputin-omnitool/actions/workflows/tests.yml)
 
 Curated catalog of OSS tools mapping to Manus AI capabilities, plus a license-review and library-import smoke harness.
 
-This is a **kernel package**, not an agent. The agent layer that consumes this kernel lives in [become-manus-skill](../become-manus-skill/) (an OpenClaw skill bundle).
+This is a **kernel package**, not an agent. The agent layer that consumes this kernel lives in [rasputin-omnitool-skill](https://github.com/jcartu/rasputin-omnitool-skill) (an OpenClaw skill bundle).
+
+> Formerly `become-manus`. Renamed to `rasputin-omnitool` at v0.3.0. Historical artifacts under `outputs/become-manus/` are pre-rename run records and are kept as-is for traceability.
 
 ## What this provides
 
-- **Capability catalog** (`become_manus_kernel.catalog`) — 28 capabilities mapped to OSS tools as of May 2026. Voice, image, video, music, memory, observability, all the usual suspects.
-- **License review** (`become_manus_kernel.licenses`, `licenses_manual`) — fetches GitHub license metadata; manually annotates dual-licensed projects.
-- **Bakeoff** (`become_manus_kernel.bakeoff`) — checks PyPI/npm metadata + import resolvability per candidate. Returns honest `capability_complete: False` because metadata is not integration.
-- **Library smoke** (`become_manus_kernel.library_smoke`) — installs Docling and Crawl4AI in a disposable venv and runs them on bundled fixture documents. This is a real library-import test, not a metadata fetch.
-- **Deliverables** (`become_manus_kernel.deliverables`) — stdlib-only generators for CSV / MD / HTML / PDF / XLSX / PPTX from a parameterized spec.
+- **Capability catalog** (`rasputin_omnitool.catalog`) — 28 capabilities mapped to OSS tools as of May 2026. Voice, image, video, music, memory, observability, all the usual suspects.
+- **License review** (`rasputin_omnitool.licenses`, `licenses_manual`) — fetches GitHub license metadata; manually annotates dual-licensed projects.
+- **Bakeoff** (`rasputin_omnitool.bakeoff`) — checks PyPI/npm metadata + import resolvability per candidate. Returns honest `capability_complete: False` because metadata is not integration.
+- **Library smoke** (`rasputin_omnitool.library_smoke`) — installs Docling and Crawl4AI in a disposable venv and runs them on bundled fixture documents. This is a real library-import test, not a metadata fetch.
+- **Deliverables** (`rasputin_omnitool.deliverables`) — stdlib-only generators for CSV / MD / HTML / PDF / XLSX / PPTX from a parameterized spec.
 
 ## What this does NOT provide
 
@@ -27,11 +33,11 @@ pip install -e .
 ## CLI
 
 ```bash
-python -m become_manus_kernel matrix              # print the catalog as JSON
-python -m become_manus_kernel license-review      # fetch and write GitHub license metadata
-python -m become_manus_kernel manual-license-review
-python -m become_manus_kernel bakeoff             # PyPI/npm/GitHub metadata + import checks
-python -m become_manus_kernel library-smoke       # disposable-venv Docling/Crawl4AI smokes
+python -m rasputin_omnitool matrix              # print the catalog as JSON
+python -m rasputin_omnitool license-review      # fetch and write GitHub license metadata
+python -m rasputin_omnitool manual-license-review
+python -m rasputin_omnitool bakeoff             # PyPI/npm/GitHub metadata + import checks
+python -m rasputin_omnitool library-smoke       # disposable-venv Docling/Crawl4AI smokes
 ```
 
 ## Tests
@@ -42,9 +48,9 @@ pytest
 
 The suite verifies catalog structure, license-review schemas, parameterized deliverable generation, and the disposable-venv library smokes.
 
-## Companion: become-manus-skill
+## Companion: rasputin-omnitool-skill
 
-[become-manus-skill](../become-manus-skill/) wires this kernel into a planner / executor / reviewer agent loop with 12 tools (6 core + 6 multimodal extensions). Run end-to-end agent goals there.
+[rasputin-omnitool-skill](https://github.com/jcartu/rasputin-omnitool-skill) wires this kernel into a planner / executor / reviewer agent loop with 12 tools (6 core + 6 multimodal extensions). Run end-to-end agent goals there.
 
 ## License
 

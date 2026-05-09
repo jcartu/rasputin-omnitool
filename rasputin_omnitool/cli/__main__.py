@@ -4,11 +4,11 @@ import argparse
 import json
 from pathlib import Path
 
-from become_manus_kernel.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
-from become_manus_kernel.catalog import all_candidates, candidate_summary
-from become_manus_kernel.library_smoke import run_crawl4ai_fixture_crawl_e2e, run_docling_fixture_parse_e2e
-from become_manus_kernel.licenses import fetch_default_license_review, write_license_review
-from become_manus_kernel.licenses_manual import write_manual_license_review
+from rasputin_omnitool.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
+from rasputin_omnitool.catalog import all_candidates, candidate_summary
+from rasputin_omnitool.library_smoke import run_crawl4ai_fixture_crawl_e2e, run_docling_fixture_parse_e2e
+from rasputin_omnitool.licenses import fetch_default_license_review, write_license_review
+from rasputin_omnitool.licenses_manual import write_manual_license_review
 
 
 def _status_code(report: dict) -> int:
@@ -17,8 +17,8 @@ def _status_code(report: dict) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        prog="python -m become_manus_kernel",
-        description="Become Manus kernel: catalog, license review, bakeoff, and library smoke",
+        prog="python -m rasputin_omnitool",
+        description="Rasputin Omnitool kernel: catalog, license review, bakeoff, and library smoke",
     )
     sub = parser.add_subparsers(dest="command", required=False)
 
@@ -26,17 +26,17 @@ def main(argv: list[str] | None = None) -> int:
     matrix.add_argument("--output", default=None)
 
     license_review = sub.add_parser("license-review", help="fetch GitHub license metadata for top candidates")
-    license_review.add_argument("--output-dir", default="outputs/become-manus")
+    license_review.add_argument("--output-dir", default="outputs/rasputin-omnitool")
 
     manual_license = sub.add_parser("manual-license-review", help="write manual license review for dual-licensed projects")
-    manual_license.add_argument("--output-dir", default="outputs/become-manus")
+    manual_license.add_argument("--output-dir", default="outputs/rasputin-omnitool")
 
     bakeoff = sub.add_parser("bakeoff", help="run sandbox and deep-research candidate bakeoffs")
-    bakeoff.add_argument("--output-dir", default="outputs/become-manus")
+    bakeoff.add_argument("--output-dir", default="outputs/rasputin-omnitool")
     bakeoff.add_argument("--no-external", action="store_true", help="skip GitHub/npm/PyPI metadata commands")
 
     library_smoke = sub.add_parser("library-smoke", help="run Docling and Crawl4AI isolated library smoke checks")
-    library_smoke.add_argument("--output-dir", default="outputs/become-manus/library-smoke")
+    library_smoke.add_argument("--output-dir", default="outputs/rasputin-omnitool/library-smoke")
     library_smoke.add_argument("--no-external", action="store_true", help="write schema/blocker reports without package installs")
     library_smoke.add_argument("--install-timeout", type=int, default=600, help="per-package install timeout in seconds")
 
