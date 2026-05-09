@@ -133,7 +133,7 @@ def _make_chart(path: Path, rows: list[dict]) -> None:
     fig, ax = plt.subplots(figsize=(10, 4.5))
     ax.bar(labels, values, color=["#6d5dfc", "#00b894", "#fdcb6e", "#e17055"])
     ax.set_ylim(0, 100)
-    ax.set_title("Become Manus local smoke capability scores")
+    ax.set_title("Rasputin Omnitool local smoke capability scores")
     ax.set_ylabel("Readiness")
     ax.tick_params(axis="x", rotation=20)
     fig.tight_layout()
@@ -164,16 +164,16 @@ def create_demo_deliverables(output_dir: str | Path) -> dict:
     md_path = output_dir / "analysis.md"
     avg = sum(float(r["score"]) for r in rows) / len(rows)
     md_path.write_text(
-        "# Become Manus Demo Analysis\n\n"
+        "# Rasputin Omnitool Demo Analysis\n\n"
         f"Average readiness score: **{avg:.1f}**.\n\n"
         "This generated artifact bundle proves Hermes can create CSV, chart, HTML, PDF, XLSX, and PPTX deliverables from one local workflow.\n"
     )
 
     html_path = output_dir / "executive_summary.html"
     html_rows = "".join(f"<tr><td>{html.escape(r['capability'])}</td><td>{r['score']}</td><td>{html.escape(r['candidate'])}</td></tr>" for r in rows)
-    html_path.write_text(f"""<!doctype html><html><head><meta charset='utf-8'><title>Become Manus Demo</title>
+    html_path.write_text(f"""<!doctype html><html><head><meta charset='utf-8'><title>Rasputin Omnitool Demo</title>
 <style>body{{font-family:Inter,Arial,sans-serif;margin:40px;color:#17202a}}table{{border-collapse:collapse;width:100%}}td,th{{border:1px solid #ddd;padding:8px}}th{{background:#111827;color:white}}img{{max-width:100%}}</style></head><body>
-<h1>Become Manus Demo Deliverables</h1><p>Generated at {datetime.now(timezone.utc).isoformat()}</p>
+<h1>Rasputin Omnitool Demo Deliverables</h1><p>Generated at {datetime.now(timezone.utc).isoformat()}</p>
 <table><thead><tr><th>Capability</th><th>Score</th><th>Candidate</th></tr></thead><tbody>{html_rows}</tbody></table>
 <p><img src='{chart_path.name}' alt='Capability chart'></p></body></html>""")
 
@@ -183,13 +183,13 @@ def create_demo_deliverables(output_dir: str | Path) -> dict:
         HTML(filename=str(html_path)).write_pdf(str(pdf_path))
     except Exception:
         # Valid enough fallback marker if WeasyPrint/Cairo stack is unavailable.
-        pdf_path.write_bytes(b"%PDF-1.4\n% Become Manus fallback PDF artifact\n1 0 obj <<>> endobj\ntrailer <<>>\n%%EOF\n")
+        pdf_path.write_bytes(b"%PDF-1.4\n% Rasputin Omnitool fallback PDF artifact\n1 0 obj <<>> endobj\ntrailer <<>>\n%%EOF\n")
 
     xlsx_path = output_dir / "analysis.xlsx"
     _write_minimal_xlsx(xlsx_path, [["Capability", "Score", "Candidate"]] + [[r["capability"], r["score"], r["candidate"]] for r in rows])
 
     pptx_path = output_dir / "presentation.pptx"
-    _write_minimal_pptx(pptx_path, "Become Manus Demo", [f"{r['capability']}: {r['score']} via {r['candidate']}" for r in rows])
+    _write_minimal_pptx(pptx_path, "Rasputin Omnitool Demo", [f"{r['capability']}: {r['score']} via {r['candidate']}" for r in rows])
 
     artifact_specs = [
         ("source_data_csv", csv_path),

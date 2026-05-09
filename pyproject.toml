@@ -1,7 +1,7 @@
 [project]
-name = "become_manus_kernel"
-version = "0.1.0"
-description = "OSS capability catalog, license review, and library smoke for Manus-equivalent agent stacks"
+name = "rasputin_omnitool"
+version = "0.3.0"
+description = "Rasputin Omnitool kernel: OSS capability catalog, license review, and library smoke for Manus-equivalent agent stacks"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -15,7 +15,7 @@ playwright = ["playwright>=1.50"]
 dev = ["pytest>=8.0", "pyflakes>=3.2"]
 
 [project.scripts]
-become-manus-kernel = "become_manus_kernel.cli.__main__:main"
+rasputin-omnitool = "rasputin_omnitool.cli.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
@@ -23,7 +23,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["become_manus_kernel*"]
+include = ["rasputin_omnitool*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

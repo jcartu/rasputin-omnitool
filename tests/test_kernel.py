@@ -4,9 +4,9 @@ from pathlib import Path
 
 
 def test_public_api_exports_version_and_core_functions():
-    import become_manus_kernel as kernel
+    import rasputin_omnitool as kernel
 
-    assert kernel.__version__ == "0.1.0"
+    assert kernel.__version__ == "0.3.0"
     assert callable(kernel.all_candidates)
     assert callable(kernel.write_license_review)
     assert callable(kernel.write_manual_license_review)
@@ -18,7 +18,7 @@ def test_public_api_exports_version_and_core_functions():
 
 
 def test_candidate_catalog_contains_core_manus_capabilities():
-    from become_manus_kernel.catalog import CAPABILITIES, candidate_summary
+    from rasputin_omnitool.catalog import CAPABILITIES, candidate_summary
 
     required = {
         "agent_computer",
@@ -40,7 +40,7 @@ def test_candidate_catalog_contains_core_manus_capabilities():
 
 
 def test_deliverable_demo_generates_expected_artifacts(tmp_path):
-    from become_manus_kernel.deliverables import create_demo_deliverables, validate_artifacts
+    from rasputin_omnitool.deliverables import create_demo_deliverables, validate_artifacts
 
     manifest = create_demo_deliverables(tmp_path)
     names = {item["name"] for item in manifest["artifacts"]}
@@ -60,7 +60,7 @@ def test_deliverable_demo_generates_expected_artifacts(tmp_path):
 
 def test_cli_entrypoints_help_lists_five_subcommands():
     result = subprocess.run(
-        ["python", "-m", "become_manus_kernel", "--help"],
+        ["python", "-m", "rasputin_omnitool", "--help"],
         cwd=Path(__file__).resolve().parents[1],
         text=True,
         capture_output=True,
@@ -90,7 +90,7 @@ def test_cli_entrypoints_help_lists_five_subcommands():
 
 
 def test_library_smoke_schemas_without_external_installs(tmp_path):
-    from become_manus_kernel.library_smoke import run_crawl4ai_fixture_crawl_e2e, run_docling_fixture_parse_e2e
+    from rasputin_omnitool.library_smoke import run_crawl4ai_fixture_crawl_e2e, run_docling_fixture_parse_e2e
 
     docling = run_docling_fixture_parse_e2e(tmp_path / "docling", run_external=False)
     crawl4ai = run_crawl4ai_fixture_crawl_e2e(tmp_path / "crawl4ai", run_external=False)
@@ -107,7 +107,7 @@ def test_library_smoke_schemas_without_external_installs(tmp_path):
 
 
 def test_bakeoff_schema_without_external_network(tmp_path):
-    from become_manus_kernel.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
+    from rasputin_omnitool.bakeoff import run_deep_research_bakeoff, run_sandbox_bakeoff
 
     sandbox = run_sandbox_bakeoff(tmp_path, run_external=False)
     deep_research = run_deep_research_bakeoff(tmp_path, run_external=False)
@@ -128,7 +128,7 @@ def test_bakeoff_schema_without_external_network(tmp_path):
 
 
 def test_bakeoff_parsers_extract_package_metadata():
-    from become_manus_kernel.bakeoff import parse_npm_view_json, parse_pip_index_versions
+    from rasputin_omnitool.bakeoff import parse_npm_view_json, parse_pip_index_versions
 
     pip_payload = parse_pip_index_versions("crawl4ai (0.8.6)\nAvailable versions: 0.8.6, 0.8.5, 0.8.0")
     assert pip_payload["latest"] == "0.8.6"
@@ -141,7 +141,7 @@ def test_bakeoff_parsers_extract_package_metadata():
 
 
 def test_license_review_classifies_repo_license_risk():
-    from become_manus_kernel.licenses import LicenseReviewRecord, classify_license_risk, summarize_license_review
+    from rasputin_omnitool.licenses import LicenseReviewRecord, classify_license_risk, summarize_license_review
 
     permissive = LicenseReviewRecord(
         name="Playwright MCP",
@@ -182,7 +182,7 @@ def test_license_review_classifies_repo_license_risk():
 
 
 def test_license_review_writes_markdown_and_json(tmp_path):
-    from become_manus_kernel.licenses import LicenseReviewRecord, write_license_review
+    from rasputin_omnitool.licenses import LicenseReviewRecord, write_license_review
 
     records = [
         LicenseReviewRecord(
@@ -212,7 +212,7 @@ def test_license_review_writes_markdown_and_json(tmp_path):
     outputs = write_license_review(records, tmp_path)
     markdown = Path(outputs["markdown_path"]).read_text()
     summary = json.loads(Path(outputs["json_path"]).read_text())
-    assert "# Become Manus License Review" in markdown
+    assert "# Rasputin Omnitool License Review" in markdown
     assert "microsoft/playwright-mcp" in markdown
     assert "approved_candidate" in markdown
     assert summary["summary"]["total"] == 2
@@ -220,12 +220,12 @@ def test_license_review_writes_markdown_and_json(tmp_path):
 
 
 def test_manual_license_review_writes_outputs(tmp_path):
-    from become_manus_kernel.licenses_manual import write_manual_license_review
+    from rasputin_omnitool.licenses_manual import write_manual_license_review
 
     outputs = write_manual_license_review(tmp_path)
     markdown = Path(outputs["markdown_path"]).read_text()
     loaded = json.loads(Path(outputs["json_path"]).read_text())
-    assert "# Become Manus — Manual License Review" in markdown
+    assert "# Rasputin Omnitool — Manual License Review" in markdown
     assert "OpenHands" in markdown
     assert "Activepieces" in markdown
     assert "PostHog" in markdown

@@ -169,7 +169,7 @@ def write_license_review(records: Iterable[LicenseReviewRecord], output_dir: str
     json_path.write_text(json.dumps(json_payload, indent=2) + "\n")
 
     lines = [
-        "# Become Manus License Review",
+        "# Rasputin Omnitool License Review",
         "",
         f"Generated: `{summary['generated_at']}`",
         "",

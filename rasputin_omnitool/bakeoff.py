@@ -469,13 +469,13 @@ def write_bakeoff_report(kind: str, title: str, records: Sequence[dict], output_
 
 def run_bakeoff(kind: str, candidates: Sequence[BakeoffCandidate], output_dir: str | Path, *, run_external: bool = True) -> dict:
     records = [evaluate_candidate(candidate, run_external=run_external) for candidate in candidates]
-    title = "Become Manus Sandbox Bakeoff" if kind == "sandbox-bakeoff" else "Become Manus Deep Research Bakeoff"
+    title = "Rasputin Omnitool Sandbox Bakeoff" if kind == "sandbox-bakeoff" else "Rasputin Omnitool Deep Research Bakeoff"
     return write_bakeoff_report(kind, title, records, output_dir, run_external=run_external)
 
 
-def run_sandbox_bakeoff(output_dir: str | Path = "outputs/become-manus", *, run_external: bool = True) -> dict:
+def run_sandbox_bakeoff(output_dir: str | Path = "outputs/rasputin-omnitool", *, run_external: bool = True) -> dict:
     return run_bakeoff("sandbox-bakeoff", SANDBOX_CANDIDATES, output_dir, run_external=run_external)
 
 
-def run_deep_research_bakeoff(output_dir: str | Path = "outputs/become-manus", *, run_external: bool = True) -> dict:
+def run_deep_research_bakeoff(output_dir: str | Path = "outputs/rasputin-omnitool", *, run_external: bool = True) -> dict:
     return run_bakeoff("deep-research-bakeoff", DEEP_RESEARCH_CANDIDATES, output_dir, run_external=run_external)
