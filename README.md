@@ -50,7 +50,7 @@ The suite verifies catalog structure, license-review schemas, parameterized deli
 
 ## Companion: rasputin-omnitool-skill
 
-[rasputin-omnitool-skill](https://github.com/jcartu/rasputin-omnitool-skill) wires this kernel into a planner / executor / reviewer agent loop with 12 tools (6 core + 6 multimodal extensions). Run end-to-end agent goals there.
+[rasputin-omnitool-skill](https://github.com/jcartu/rasputin-omnitool-skill) wires this kernel into a planner / executor / reviewer agent loop with 18 tools. Includes real Langfuse observability, cost ceiling enforcement, Promptfoo evals, and an Open WebUI plugin for chat-driven goal invocation.
 
 ## License
 
