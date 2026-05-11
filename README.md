@@ -1,9 +1,14 @@
-# rasputin-omnitool
+<p align="center">
+<img src=".github/assets/logo-mark.png" alt="rasputin-omnitool" width="80"/>
+</p>
+
+<p align="center">
+<img src=".github/assets/hero.png" alt="rasputin-omnitool hero" width="100%"/>
+</p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 [![Tests](https://github.com/jcartu/rasputin-omnitool/actions/workflows/tests.yml/badge.svg)](https://github.com/jcartu/rasputin-omnitool/actions/workflows/tests.yml)
-
 Curated catalog of OSS tools mapping to Manus AI capabilities, plus a license-review and library-import smoke harness.
 
 This is a **kernel package**, not an agent. The agent layer that consumes this kernel lives in [rasputin-omnitool-skill](https://github.com/jcartu/rasputin-omnitool-skill) (an OpenClaw skill bundle).
