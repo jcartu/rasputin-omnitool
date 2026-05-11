@@ -182,5 +182,5 @@ def candidate_summary() -> dict:
         "capability_count": len(CAPABILITIES),
         "candidate_count": len(rows),
         "preferred_candidates": preferred,
-        "license_review_required": sorted({row["name"] for row in rows if "verify" in row["license"].lower() or "agpl" in row["license"].lower() or "source" in row["license"].lower()}),
+        "license_review_required": sorted({row["name"] for row in rows if "agpl" in row["license"].lower() or "source" in row["license"].lower()}),
     }
