@@ -1,6 +1,6 @@
 """rasputin_omnitool — OSS capability catalog, license review, and library smoke."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 from rasputin_omnitool.catalog import all_candidates, candidate_summary, CAPABILITIES
 from rasputin_omnitool.licenses import fetch_default_license_review, write_license_review

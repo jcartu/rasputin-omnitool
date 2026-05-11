@@ -6,7 +6,7 @@ from pathlib import Path
 def test_public_api_exports_version_and_core_functions():
     import rasputin_omnitool as kernel
 
-    assert kernel.__version__ == "0.3.0"
+    assert kernel.__version__ == "0.4.0"
     assert callable(kernel.all_candidates)
     assert callable(kernel.write_license_review)
     assert callable(kernel.write_manual_license_review)
@@ -233,3 +233,36 @@ def test_manual_license_review_writes_outputs(tmp_path):
     assert "approved_count" in loaded["summary"]
     assert "conditional_count" in loaded["summary"]
     assert "review_required_count" in loaded["summary"]
+
+def test_catalog_has_28_capabilities():
+    from rasputin_omnitool.catalog import CAPABILITIES
+    assert len(CAPABILITIES) == 28, f"expected 28, got {len(CAPABILITIES)}"
+
+
+def test_catalog_includes_new_v04_capabilities():
+    from rasputin_omnitool.catalog import CAPABILITIES
+    new_keys = {"tts", "stt", "image_generation", "video_generation", "music_generation",
+                "memory", "vector_db", "reranker", "llm_serving", "web_search",
+                "observability", "eval_harness"}
+    missing = new_keys - set(CAPABILITIES.keys())
+    assert not missing, f"missing capabilities: {missing}"
+
+
+def test_no_duplicate_candidates_per_capability():
+    from rasputin_omnitool.catalog import CAPABILITIES
+    for capability, candidates in CAPABILITIES.items():
+        names = [c.name for c in candidates]
+        dupes = [n for n in names if names.count(n) > 1]
+        assert not dupes, f"capability {capability} has duplicates: {set(dupes)}"
+
+
+def test_no_verify_license_markers():
+    from rasputin_omnitool.catalog import CAPABILITIES
+    bad = []
+    for capability, candidates in CAPABILITIES.items():
+        for c in candidates:
+            if c.license.lower() == "verify":
+                bad.append(f"{capability}/{c.name}")
+    assert not bad, f"verify markers remain: {bad}"
+
+

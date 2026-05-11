@@ -12,7 +12,7 @@ This is a **kernel package**, not an agent. The agent layer that consumes this k
 
 ## What this provides
 
-- **Capability catalog** (`rasputin_omnitool.catalog`) — 28 capabilities mapped to OSS tools as of May 2026. Voice, image, video, music, memory, observability, all the usual suspects.
+- **Capability catalog** (`rasputin_omnitool.catalog`) — 28 capabilities mapped to OSS tools as of May 2026. Covers agent infrastructure, browser automation, coding agents, research, webapps, design, mobile, slides, documents, data analysis, workflows, mail, APIs, scheduling, analytics, plus voice (TTS/STT), image/video/music generation, memory, vector storage, reranking, LLM serving, web search, observability, and eval harnesses.
 - **License review** (`rasputin_omnitool.licenses`, `licenses_manual`) — fetches GitHub license metadata; manually annotates dual-licensed projects.
 - **Bakeoff** (`rasputin_omnitool.bakeoff`) — checks PyPI/npm metadata + import resolvability per candidate. Returns honest `capability_complete: False` because metadata is not integration.
 - **Library smoke** (`rasputin_omnitool.library_smoke`) — installs Docling and Crawl4AI in a disposable venv and runs them on bundled fixture documents. This is a real library-import test, not a metadata fetch.

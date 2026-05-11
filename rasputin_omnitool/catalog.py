@@ -18,7 +18,7 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
         Candidate("agent-infra/sandbox", "https://github.com/agent-infra/sandbox", "Apache-2.0", "all-in-one Docker agent computer", True),
         Candidate("microsandbox", "https://github.com/zerocore-ai/microsandbox", "Apache-2.0", "local-first programmable sandboxes", True),
         Candidate("Daytona", "https://github.com/daytonaio/daytona", "AGPL-3.0", "elastic AI/dev sandboxes"),
-        Candidate("OpenSandbox", "https://github.com/alibaba/OpenSandbox", "verify", "Docker/Kubernetes sandbox API"),
+        Candidate("OpenSandbox", "https://github.com/alibaba/OpenSandbox", "Apache-2.0", "Docker/Kubernetes sandbox API"),
     ],
     "browser_operator": [
         Candidate("Playwright MCP", "https://github.com/microsoft/playwright-mcp", "Apache-2.0", "MCP browser automation", True),
@@ -33,7 +33,6 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
     ],
     "wide_research": [
         Candidate("LangGraph", "https://github.com/langchain-ai/langgraph", "MIT", "stateful agent graph orchestration", True),
-        Candidate("LangGraph", "https://github.com/langchain-ai/langgraph", "MIT", "stateful agent graph orchestration"),
         Candidate("AutoGen", "https://github.com/microsoft/autogen", "MIT", "multi-agent orchestration"),
     ],
     "deep_research": [
@@ -52,7 +51,7 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
     ],
     "design_view": [
         Candidate("Penpot", "https://github.com/penpot/penpot", "MPL-2.0", "OSS design platform", True),
-        Candidate("Onlook", "https://github.com/onlook-dev/onlook", "verify", "visual editor for React apps"),
+        Candidate("Onlook", "https://github.com/onlook-dev/onlook", "Apache-2.0", "visual editor for React apps"),
         Candidate("Mitosis", "https://github.com/BuilderIO/mitosis", "MIT", "framework-neutral components"),
     ],
     "mobile_publishing": [
@@ -80,25 +79,88 @@ CAPABILITIES: Dict[str, List[Candidate]] = {
         Candidate("Activepieces", "https://github.com/activepieces/activepieces", "MIT CE", "Zapier-like workflows", True),
         Candidate("MCP servers", "https://github.com/modelcontextprotocol/servers", "MIT/Apache-2.0", "standard tool connectors", True),
         Candidate("Composio", "https://github.com/ComposioHQ/composio", "MIT SDK", "OAuth-heavy SaaS tools", True),
-        Candidate("n8n", "https://github.com/n8n-io/n8n", "source-available", "large connector library"),
+        Candidate("n8n", "https://github.com/n8n-io/n8n", "Sustainable Use License (source-available)", "large connector library"),
     ],
     "mail_agent": [
         Candidate("Himalaya", "https://github.com/pimalaya/himalaya", "MIT", "terminal IMAP/SMTP client", True),
-        Candidate("Himalaya", "https://github.com/pimalaya/himalaya", "MIT", "terminal IMAP/SMTP client"),
     ],
     "api_platform": [
         Candidate("FastAPI", "https://github.com/fastapi/fastapi", "MIT", "REST API service", True),
-        Candidate("FastAPI", "https://github.com/fastapi/fastapi", "MIT", "REST API service"),
     ],
     "scheduled_tasks": [
         Candidate("Apache Airflow", "https://github.com/apache/airflow", "Apache-2.0", "batch/data workflows", True),
-        Candidate("Apache Airflow", "https://github.com/apache/airflow", "Apache-2.0", "batch/data workflows"),
         Candidate("Kestra", "https://github.com/kestra-io/kestra", "Apache-2.0 core", "event workflows"),
     ],
     "analytics": [
-        Candidate("PostHog", "https://github.com/PostHog/posthog", "verify", "product analytics/replay/flags", True),
+        Candidate("PostHog", "https://github.com/PostHog/posthog", "MIT (server) + commercial (cloud features)", "product analytics/replay/flags", True),
         Candidate("Umami", "https://github.com/umami-software/umami", "MIT", "web analytics"),
         Candidate("Plausible", "https://github.com/plausible/analytics", "AGPL-3.0", "privacy analytics"),
+    ],
+    # v0.4 additions — 12 new capability rows
+    "tts": [
+        Candidate("Voxtral TTS", "https://github.com/mistralai/voxtral", "Apache-2.0", "Mistral TTS, beat ElevenLabs Flash v2.5 in blind tests", True),
+        Candidate("Kokoro 82M", "https://github.com/hexgrad/kokoro", "Apache-2.0", "ultra-light TTS, runs on CPU", True),
+        Candidate("Chatterbox", "https://github.com/resemble-ai/chatterbox", "MIT", "voice cloning TTS"),
+        Candidate("Piper", "https://github.com/rhasspy/piper", "MIT", "fast neural TTS for local use"),
+    ],
+    "stt": [
+        Candidate("Canary-Qwen 2.5B", "https://huggingface.co/nvidia/canary-qwen-2.5b", "CC-BY-4.0", "NVIDIA SALM, top of HF Open ASR Leaderboard", True),
+        Candidate("Whisper-large-v3-turbo", "https://huggingface.co/openai/whisper-large-v3-turbo", "MIT", "fast multilingual STT", True),
+        Candidate("Parakeet TDT", "https://huggingface.co/nvidia/parakeet-tdt-1.1b", "CC-BY-4.0", "low-latency streaming"),
+        Candidate("Moonshine v2", "https://github.com/usefulsensors/moonshine", "MIT", "27 MB edge STT"),
+    ],
+    "image_generation": [
+        Candidate("FLUX.2 [dev]", "https://github.com/black-forest-labs/flux", "FLUX.1 [dev] Non-Commercial License", "32B frontier-quality image gen", True),
+        Candidate("Z-Image-Turbo", "https://github.com/QwenLM/Z-Image", "Apache-2.0", "fast bilingual image gen", True),
+        Candidate("Stable Diffusion 3.5 Large", "https://github.com/Stability-AI/sd3.5", "Stability Community License", "mature SD ecosystem"),
+        Candidate("HiDream-I1", "https://github.com/HiDream-ai/HiDream-I1", "MIT", "open-weight image gen"),
+    ],
+    "video_generation": [
+        Candidate("Wan 2.1", "https://github.com/Wan-Video/Wan2.1", "Apache-2.0", "fits 96GB single card without aggressive quant", True),
+        Candidate("HunyuanVideo", "https://github.com/Tencent/HunyuanVideo", "Tencent Community License", "needs 60GB+, slower"),
+        Candidate("Open-Sora 2.0", "https://github.com/hpcaitech/Open-Sora", "Apache-2.0", "more permissive but lower quality"),
+        Candidate("CogVideoX", "https://github.com/THUDM/CogVideo", "Apache-2.0", "alternative T2V"),
+    ],
+    "music_generation": [
+        Candidate("MusicGen-Melody", "https://github.com/facebookresearch/audiocraft", "MIT", "Meta T2M, stable", True),
+        Candidate("YuE", "https://github.com/multimodal-art-projection/YuE", "Apache-2.0", "full-song with vocals, less stable"),
+    ],
+    "memory": [
+        Candidate("RASPUTIN", "https://github.com/jcartu/rasputin-memory", "MIT", "Joshua's MCP-served hybrid retrieval, 72.4% LoCoMo", True),
+        Candidate("Mem0", "https://github.com/mem0ai/mem0", "Apache-2.0", "91.6% LoCoMo, popular"),
+        Candidate("Hindsight", "https://github.com/leodriesch/hindsight", "MIT", "89.61% LoCoMo"),
+    ],
+    "vector_db": [
+        Candidate("Qdrant", "https://github.com/qdrant/qdrant", "Apache-2.0", "Joshua's choice, RASPUTIN backend", True),
+        Candidate("Weaviate", "https://github.com/weaviate/weaviate", "BSD-3-Clause", "graph + vector"),
+        Candidate("Chroma", "https://github.com/chroma-core/chroma", "Apache-2.0", "embedded, easy onboarding"),
+        Candidate("LanceDB", "https://github.com/lancedb/lancedb", "Apache-2.0", "columnar, multimodal"),
+    ],
+    "reranker": [
+        Candidate("Qwen3-Reranker-0.6B", "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B", "Apache-2.0", "fast cross-encoder", True),
+        Candidate("bge-reranker-v2-m3", "https://huggingface.co/BAAI/bge-reranker-v2-m3", "Apache-2.0", "multilingual reranker"),
+    ],
+    "llm_serving": [
+        Candidate("vLLM", "https://github.com/vllm-project/vllm", "Apache-2.0", "production-grade LLM serving", True),
+        Candidate("SGLang", "https://github.com/sgl-project/sglang", "Apache-2.0", "structured generation"),
+        Candidate("Ollama", "https://github.com/ollama/ollama", "MIT", "edge / dev convenience"),
+        Candidate("TGI", "https://github.com/huggingface/text-generation-inference", "Apache-2.0", "HF reference server"),
+    ],
+    "web_search": [
+        Candidate("SearXNG", "https://github.com/searxng/searxng", "AGPL-3.0", "federated meta-search", True),
+        Candidate("Meilisearch", "https://github.com/meilisearch/meilisearch", "MIT", "typed full-text"),
+        Candidate("Typesense", "https://github.com/typesense/typesense", "GPL-3.0", "fast typed search"),
+    ],
+    "observability": [
+        Candidate("Langfuse", "https://github.com/langfuse/langfuse", "MIT (core)", "LLM-native tracing", True),
+        Candidate("Arize Phoenix", "https://github.com/Arize-ai/phoenix", "Elastic-2.0", "stronger eval rigor"),
+        Candidate("Helicone", "https://github.com/Helicone/helicone", "Apache-2.0", "API gateway + tracing"),
+        Candidate("OpenLLMetry", "https://github.com/traceloop/openllmetry", "Apache-2.0", "OTel-based"),
+    ],
+    "eval_harness": [
+        Candidate("Promptfoo", "https://github.com/promptfoo/promptfoo", "MIT", "YAML-driven LLM evals", True),
+        Candidate("DeepEval", "https://github.com/confident-ai/deepeval", "Apache-2.0", "pytest-style evals"),
+        Candidate("TruLens", "https://github.com/truera/trulens", "MIT", "feedback functions"),
     ],
 }
 
