@@ -1,6 +1,3 @@
-<p align="center">
-<img src=".github/assets/logo-mark.png" alt="rasputin-omnitool" width="80"/>
-</p>
 
 <p align="center">
 <img src=".github/assets/hero.png" alt="rasputin-omnitool hero" width="100%"/>
